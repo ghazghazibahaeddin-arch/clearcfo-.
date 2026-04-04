@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ClearCFO — مساعدك المالي الذكي</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  :root {
+    --bg: #0a0f1e;
+    --card: #111827;
+    --card2: #1a2234;
+    --green: #10b981;
+    --green2: #059669;
+    --red: #ef4444;
+    --yellow: #f59e0b;
+    --blue: #3b82f6;
+    --text: #f1f5f9;
+    --muted: #64748b;
+    --border: #1e293b;
+  }
+
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ═══ PAGES ═══ */
+  .page { display: none; min-height: 100vh; }
+  .page.active { display: block; }
+
+  /* ═══ LANDING ═══ */
+  .landing-hero {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0a0f1e 0%, #0f2027 50%, #0a0f1e 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .landing-hero::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, #10b98122 0%, transparent 70%);
+    top: -100px; left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
+
+  .logo-big {
+    width: 80px; height: 80px;
+    background: linear-gradient(135deg, var(--green), var(--blue));
+    border-radius: 20px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem; font-weight: 900;
+    margin: 0 auto 1.5rem;
+    box-shadow: 0 20px 60px #10b98133;
+  }
+
+  .hero-badge {
+    background: #10b98122;
+    border: 1px solid #10b98144;
+    color: var(--green);
+    padding: 0.4rem 1rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    margin-bottom: 1.5rem;
+    display: inline-block;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #fff, #10b981);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero-sub {
+    color: var(--muted);
+    font-size: 1.1rem;
+    margin-bottom: 2.5rem;
+    max-width: 500px;
+    line-height: 1.6;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 3rem;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--green), var(--green2));
+    color: white;
+    border: none;
+    padding: 0.9rem 2rem;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 8px 30px #10b98144;
+    transition: all 0.2s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px #10b98155; }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 0.9rem 2rem;
+    border-radius: 12px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--green); color: var(--green); }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    max-width: 900px;
+    margin: 0 auto 3rem;
+    padding: 0 1rem;
+  }
+
+  .feature-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: right;
+  }
+
+  .feature-icon {
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .feature-card h3 { font-size: 1rem; margin-bottom: 0.5rem; }
+  .feature-card p { color: var(--muted); font-size: 0.875rem; line-height: 1.5; }
+
+  .pricing-section {
+    padding: 3rem 1rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .section-title {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 2rem;
+  }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+
+  .price-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: center;
+    position: relative;
+  }
+
+  .price-card.featured {
+    border-color: var(--green);
+    box-shadow: 0 0 40px #10b98122;
+  }
+
+  .price-badge {
+    position: absolute;
+    top: -12px; left: 50%;
+    transform: translateX(-50%);
+    background: var(--green);
+    color: white;
+    padding: 0.25rem 1rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+  .price-name { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .price-amount { font-size: 2.5rem; font-weight: 900; color: var(--green); }
+  .price-period { color: var(--muted); font-size: 0.875rem; margin-bottom: 1rem; }
+  .price-features { list-style: none; text-align: right; margin-bottom: 1.5rem; }
+  .price-features li { padding: 0.3rem 0; font-size: 0.875rem; color: var(--muted); }
+  .price-features li::before { content: '✓ '; color: var(--green); }
+
+  /* ═══ AUTH ═══ */
+  .auth-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: var(--bg);
+  }
+
+  .auth-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 420px;
+  }
+
+  .auth-logo {
+    width: 50px; height: 50px;
+    background: linear-gradient(135deg, var(--green), var(--blue));
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 900; font-size: 1.2rem;
+    margin: 0 auto 1rem;
+  }
+
+  .auth-title { text-align: center; font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem; }
+  .auth-sub { text-align: center; color: var(--muted); font-size: 0.875rem; margin-bottom: 1.5rem; }
+
+  .input-group { margin-bottom: 1rem; }
+  .input-label { display: block; font-size: 0.875rem; color: var(--muted); margin-bottom: 0.4rem; }
+
+  .input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-size: 0.95rem;
+    transition: border-color 0.2s;
+  }
+  .input:focus { outline: none; border-color: var(--green); }
+
+  .btn-full {
+    width: 100%;
+    padding: 0.9rem;
+    background: linear-gradient(135deg, var(--green), var(--green2));
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: all 0.2s;
+  }
+  .btn-full:hover { opacity: 0.9; transform: translateY(-1px); }
+  .btn-full:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+  .auth-link { text-align: center; margin-top: 1rem; font-size: 0.875rem; color: var(--muted); }
+  .auth-link a { color: var(--green); cursor: pointer; text-decoration: none; }
+
+  .error-msg {
+    background: #ef444422;
+    border: 1px solid #ef444444;
+    color: var(--red);
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .success-msg {
+    background: #10b98122;
+    border: 1px solid #10b98144;
+    color: var(--green);
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  /* ═══ DASHBOARD ═══ */
+  .dash-nav {
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 800;
+    font-size: 1.1rem;
+  }
+
+  .nav-logo-icon {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, var(--green), var(--blue));
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 900; font-size: 0.9rem;
+  }
+
+  .nav-right { display: flex; align-items: center; gap: 1rem; }
+  .user-email { color: var(--muted); font-size: 0.8rem; }
+
+  .btn-logout {
+    background: #ef444422;
+    color: var(--red);
+    border: 1px solid #ef444433;
+    padding: 0.4rem 0.9rem;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-logout:hover { background: #ef444433; }
+
+  .dash-content { padding: 1.5rem; max-width: 1000px; margin: 0 auto; }
+  .dash-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.3rem; }
+  .dash-sub { color: var(--muted); font-size: 0.9rem; margin-bottom: 2rem; }
+
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+
+  .tool-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tool-card::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 100%; height: 3px;
+    background: var(--accent, var(--green));
+  }
+
+  .tool-card:hover { transform: translateY(-3px); border-color: var(--accent, var(--green)); box-shadow: 0 10px 40px #0003; }
+
+  .tool-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+  .tool-name { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .tool-desc { color: var(--muted); font-size: 0.85rem; line-height: 1.5; margin-bottom: 1rem; }
+  .tool-arrow { color: var(--accent, var(--green)); font-size: 0.85rem; font-weight: 600; }
+
+  /* ═══ FEATURE PAGES ═══ */
+  .feat-header {
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .btn-back {
+    background: var(--card2);
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+  }
+  .btn-back:hover { border-color: var(--green); }
+
+  .feat-title { font-size: 1.2rem; font-weight: 800; }
+  .feat-content { padding: 1.5rem; max-width: 800px; margin: 0 auto; }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .card-title { font-size: 1rem; font-weight: 700; margin-bottom: 1rem; color: var(--green); }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  @media(max-width: 500px) { .form-row { grid-template-columns: 1fr; } }
+
+  .form-group { margin-bottom: 1rem; }
+  .form-label { display: block; font-size: 0.8rem; color: var(--muted); margin-bottom: 0.4rem; }
+
+  select.input { cursor: pointer; }
+
+  textarea.input {
+    resize: vertical;
+    min-height: 120px;
+    font-family: inherit;
+  }
+
+  .btn-ai {
+    width: 100%;
+    padding: 0.9rem;
+    background: linear-gradient(135deg, var(--green), var(--green2));
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  .btn-ai:hover { opacity: 0.9; transform: translateY(-1px); }
+  .btn-ai:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+  .result-card {
+    background: var(--card2);
+    border: 1px solid #10b98133;
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .result-title { color: var(--green); font-weight: 700; margin-bottom: 1rem; font-size: 0.9rem; }
+  .result-text { white-space: pre-wrap; line-height: 1.7; font-size: 0.9rem; color: #e2e8f0; }
+
+  .btn-copy {
+    margin-top: 1rem;
+    padding: 0.5rem 1.2rem;
+    background: var(--card);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+  }
+  .btn-copy:hover { border-color: var(--green); color: var(--green); }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .stat-value { font-size: 1.5rem; font-weight: 800; }
+  .stat-label { color: var(--muted); font-size: 0.75rem; margin-top: 0.25rem; }
+
+  .big-number {
+    text-align: center;
+    padding: 2rem;
+    background: #ef444411;
+    border: 1px solid #ef444433;
+    border-radius: 16px;
+    margin-bottom: 1rem;
+  }
+
+  .big-number .amount { font-size: 3rem; font-weight: 900; color: var(--red); }
+  .big-number .label { color: var(--muted); margin-top: 0.5rem; }
+  .big-number .savings { color: var(--green); font-size: 1.1rem; margin-top: 0.5rem; font-weight: 700; }
+
+  .list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.85rem 1rem;
+    background: var(--bg);
+    border-radius: 10px;
+    margin-bottom: 0.5rem;
+  }
+
+  .list-item-left h4 { font-size: 0.9rem; font-weight: 600; }
+  .list-item-left p { font-size: 0.8rem; color: var(--muted); }
+
+  .badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .badge-red { background: #ef444422; color: var(--red); }
+  .badge-green { background: #10b98122; color: var(--green); }
+  .badge-yellow { background: #f59e0b22; color: var(--yellow); }
+  .badge-blue { background: #3b82f622; color: var(--blue); }
+
+  .risk-gauge {
+    text-align: center;
+    padding: 1.5rem;
+  }
+
+  .risk-number {
+    font-size: 4rem;
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  .risk-label { color: var(--muted); margin-top: 0.5rem; }
+
+  .alert-banner {
+    background: #f59e0b11;
+    border: 1px solid #f59e0b44;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+  }
+
+  .loading {
+    display: inline-block;
+    animation: spin 1s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 1.5rem 0;
+  }
+  .tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0;
+  }
+
+  .tab {
+    padding: 0.6rem 1.2rem;
+    border: none;
+    background: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 0.875rem;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: all 0.2s;
+  }
+
+  .tab.active { color: var(--green); border-bottom-color: var(--green); }
+
+  .empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--muted);
+  }
+  .empty-state .icon { font-size: 3rem; margin-bottom: 1rem; }
+
+  /* Forgot password */
+  .forgot-link {
+    text-align: left;
+    margin-top: -0.5rem;
+    margin-bottom: 1rem;
+  }
+  .forgot-link a { color: var(--muted); font-size: 0.8rem; cursor: pointer; }
+  .forgot-link a:hover { color: var(--green); }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- PAGE 1: LANDING -->
+<!-- ═══════════════════════════════════════ -->
+<div id="page-landing" class="page active">
+  <div class="landing-hero">
+    <div class="logo-big">CF</div>
+    <div class="hero-badge">🤖 مدعوم بالذكاء الاصطناعي</div>
+    <h1 class="hero-title">مساعدك المالي الذكي</h1>
+    <p class="hero-sub">استرجع فلوسك، اكتشف الهدر، حلل عقودك — كل هذا بالذكاء الاصطناعي في مكان واحد</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="showPage('page-signup')">ابدأ مجاناً ←</button>
+      <button class="btn-secondary" onclick="showPage('page-login')">تسجيل الدخول</button>
+    </div>
+  </div>
+
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">⚡</div>
+      <h3>Chargeback Autopilot</h3>
+      <p>AI يولد رد احترافي لكل chargeback في ثوانٍ ويزيد فرص الفوز بـ 80%</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">💸</div>
+      <h3>Spend Intelligence</h3>
+      <p>حلل كشف حسابك واكتشف الاشتراكات المهدورة والرسوم المخفية</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📄</div>
+      <h3>Contract AI</h3>
+      <p>حلل عقودك واكتشف المخاطر والبنود الضارة قبل التوقيع</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🧾</div>
+      <h3>Invoice Analyzer</h3>
+      <p>اكتشف الأخطاء والرسوم الزائدة في فواتيرك تلقائياً</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <h3>Cash Flow Predictor</h3>
+      <p>تنبأ بتدفقك النقدي للأشهر الثلاثة القادمة وتجنب المشاكل</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🤖</div>
+      <h3>AI CFO Advisor</h3>
+      <p>احصل على توصيات مالية شخصية من CFO اصطناعي على مدار الساعة</p>
+    </div>
+  </div>
+
+  <div class="pricing-section">
+    <h2 class="section-title">خطط بسيطة وشفافة</h2>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-name">مجاني</div>
+        <div class="price-amount">$0</div>
+        <div class="price-period">للأبد</div>
+        <ul class="price-features">
+          <li>3 chargebacks شهرياً</li>
+          <li>تحليل واحد للمصاريف</li>
+          <li>AI أساسي</li>
+        </ul>
+        <button class="btn-full" onclick="showPage('page-signup')">ابدأ مجاناً</button>
+      </div>
+      <div class="price-card featured">
+        <div class="price-badge">الأكثر شعبية</div>
+        <div class="price-name">Pro</div>
+        <div class="price-amount">$99</div>
+        <div class="price-period">شهرياً</div>
+        <ul class="price-features">
+          <li>chargebacks غير محدودة</li>
+          <li>كل الميزات</li>
+          <li>حفظ البيانات</li>
+          <li>تقارير شهرية</li>
+        </ul>
+        <button class="btn-full" onclick="showPage('page-signup')">ابدأ الآن</button>
+      </div>
+      <div class="price-card">
+        <div class="price-name">Enterprise</div>
+        <div class="price-amount">$299</div>
+        <div class="price-period">شهرياً</div>
+        <ul class="price-features">
+          <li>كل مزايا Pro</li>
+          <li>API access</li>
+          <li>دعم أولوية</li>
+          <li>تخصيص كامل</li>
+        </ul>
+        <button class="btn-full" onclick="showPage('page-signup')">تواصل معنا</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- PAGE 2: LOGIN -->
+<!-- ═══════════════════════════════════════ -->
+<div id="page-login" class="page">
+  <div class="auth-page">
+    <div class="auth-card">
+      <div class="auth-logo">CF</div>
+      <h2 class="auth-title">مرحباً بعودتك</h2>
+      <p class="auth-sub">سجّل دخولك للوصول إلى لوحة التحكم</p>
+      <div id="login-error" class="error-msg" style="display:none"></div>
+      <div id="login-success" class="success-msg" style="display:none"></div>
+      <div class="input-group">
+        <label class="input-label">البريد الإلكتروني</label>
+        <input type="email" id="login-email" class="input" placeholder="name@example.com">
+      </div>
+      <div class="input-group">
+        <label class="input-label">كلمة المرور</label>
+        <input type="password" id="login-password" class="input" placeholder="••••••••">
+      </div>
+      <div class="forgot-link">
+        <a onclick="showPage('page-forgot')">نسيت كلمة المرور؟</a>
+      </div>
+      <button class="btn-full" id="login-btn" onclick="handleLogin()">دخول</button>
+      <div class="auth-link">
+        ليس لديك حساب؟ <a onclick="showPage('page-signup')">إنشاء حساب مجاني</a>
+      </div>
+      <div class="auth-link" style="margin-top:0.5rem">
+        <a onclick="showPage('page-landing')" style="color:var(--muted)">← العودة للرئيسية</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- PAGE 3: SIGNUP -->
+<!-- ═══════════════════════════════════════ -->
+<div id="page-signup" class="page">
+  <div class="auth-page">
+    <div class="auth-card">
+      <div class="auth-logo">CF</div>
+      <h2 class="auth-title">إنشاء حساب مجاني</h2>
+      <p class="auth-sub">انضم وابدأ في توفير المال اليوم</p>
+      <div id="signup-error" class="error-msg" style="display:none"></div>
+      <div id="signup-success" class="success-msg" style="display:none"></div>
+      <div class="input-group">
+        <label class="input-label">الاسم الكامل</label>
+        <input type="text" id="signup-name" class="input" placeholder="محمد أحمد">
+      </div>
+      <div class="input-group">
+        <label class="input-label">البريد الإلكتروني</label>
+        <input type="email" id="signup-email" class="input" placeholder="name@example.com">
+      </div>
+      <div class="input-group">
+        <label class="input-label">كلمة المرور</label>
+        <input type="password" id="signup-password" class="input" placeholder="8 أحرف على الأقل">
+      </div>
+      <button class="btn-full" id="signup-btn" onclick="handleSignup()">إنشاء الحساب مجاناً</button>
+      <div class="auth-link">
+        عندك حساب؟ <a onclick="showPage('page-login')">تسجيل الدخول</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- PAGE 4: FORGOT PASSWORD -->
+<!-- ═══════════════════════════════════════ -->
+<div id="page-forgot" class="page">
+  <div class="auth-page">
+    <div class="auth-card">
+      <div class="auth-logo">CF</div>
+      <h2 class="auth-title">استعادة كلمة المرور</h2>
+      <p class="auth-sub">أدخل بريدك وسنرسل لك رابط الاستعادة</p>
+      <div id="forgot-error" class="error-msg" style="display:none"></div>
+      <div id="forgot-success" class="success-msg" style="display:none"></div>
+      <div class="input-group">
+        <label class="input-label">البريد الإلكتروني</label>
+        <input type="email" id="forgot-email" class="input" placeholder="name@example.com">
+      </div>
+      <button class="btn-full" onclick="handleForgot()">إرسال رابط الاستعادة</button>
+      <div class="auth-link">
+        <a onclick="showPage('page-login')">← العودة لتسجيل الدخول</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- PAGE 5: DASHBOARD -->
+<!-- ═══════════════════════════════════════ -->
+<div id="page-dashboard" class="page">
+  <nav class="dash-nav">
+    <div class="nav-logo">
+      <div class="nav-logo-icon">CF</div>
+      ClearCFO
+    </div>
+    <div class="nav-right">
+      <span class="user-email" id="nav-email"></span>
+      <button class="btn-logout" onclick="handleLogout()">خروج</button>
+    </div>
+  </nav>
+  <div class="dash-content">
+    <h1 class="dash-title" id="dash-greeting">مرحباً 👋</h1>
+    <p class="dash-sub">اختر أداة للبدء في توفير المال</p>
+    <div class="tools-grid">
+      <div class="tool-card" style="--accent:#10b981" onclick="showPage('page-chargebacks')">
+        <div class="tool-icon">⚡</div>
+        <div class="tool-name">Chargeback Autopilot</div>
+        <div class="tool-desc">AI يولد رد احترافي لكل chargeback ويزيد فرص الفوز بـ 80%</div>
+        <div class="tool-arrow">ابدأ الآن ←</div>
+      </div>
+      <div class="tool-card" style="--accent:#3b82f6" onclick="showPage('page-spend')">
+        <div class="tool-icon">💸</div>
+        <div class="tool-name">Spend Intelligence</div>
+        <div class="tool-desc">حلل مصاريفك واكتشف الاشتراكات المهدورة والرسوم المخفية</div>
+        <div class="tool-arrow">ابدأ الآن ←</div>
+      </div>
+      <div class="tool-card" style="--accent:#f59e0b" onclick="showPage('page-contracts')">
+        <div class="tool-icon">📄</div>
+        <div class="tool-name">Contract AI</div>
+        <div class="tool-desc">حلل عقودك واكتشف المخاطر والبنود الضارة قبل فوات الأوان</div>
+        <div class="tool-arrow">ابدأ الآن ←</div>
+      </div>
+      <div class="tool-card" style="--accent:#8b5cf6" onclick="showPage('page-invoice')">
+        <div class="tool-icon">🧾</div>
+        <div class="tool-name">Invoice Analyzer</div>
+        <div class="tool-desc">اكتشف الأخطاء والرسوم الزائدة في فواتيرك تلقائياً</div>
+        <div class="tool-arrow">ابدأ الآن ←</div>
+      </div>
+      <div class="tool-card" style="--accent:#06b6d4" onclick="showPage('page-cashflow')">
+        <div class="tool-icon">📊</div>
+        <div class="tool-name">Cash Flow Predictor</div>
+        <div class="tool-desc">تنبأ بتدفقك النقدي للأشهر الثلاثة القادمة وتجنب المشاكل</div>
+        <div class="tool-arrow">ابدأ الآن ←</div>
+      </div>
+      <div class="tool-card" style="--accent:#ec4899" onclick="showPage('page-advisor')">
+        <div class="tool-icon">🤖</div>
+        <div class="tool-name">AI CFO Advisor</div>
+        <div class="tool-desc">احصل على توصيات مالية شخصية من CFO اصطناعي</div>
+        <div class="tool-arrow">ابدأ الآن ←</div>
+      </div>
+    </div>
+  </div>
+</div>
