@@ -832,3 +832,844 @@
     </div>
   </div>
 </div>
+<!-- ═══════════════════════════════════════ -->
+<!-- PAGE 6: CHARGEBACKS -->
+<!-- ═══════════════════════════════════════ -->
+<div id="page-chargebacks" class="page">
+  <div class="feat-header">
+    <button class="btn-back" onclick="showPage('page-dashboard')">← رجوع</button>
+    <span class="feat-title">⚡ Chargeback Autopilot</span>
+  </div>
+  <div class="feat-content">
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-value" id="cb-total">0</div>
+        <div class="stat-label">إجمالي</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" style="color:var(--green)" id="cb-won">0</div>
+        <div class="stat-label">تم الإرسال</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" style="color:var(--yellow)" id="cb-pending">0</div>
+        <div class="stat-label">قيد الانتظار</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">+ إضافة chargeback جديد</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">اسم العميل</label>
+          <input type="text" id="cb-customer" class="input" placeholder="محمد أحمد">
+        </div>
+        <div class="form-group">
+          <label class="form-label">المبلغ ($)</label>
+          <input type="number" id="cb-amount" class="input" placeholder="99.99">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">تاريخ المعاملة</label>
+          <input type="date" id="cb-date" class="input">
+        </div>
+        <div class="form-group">
+          <label class="form-label">رقم التتبع (اختياري)</label>
+          <input type="text" id="cb-tracking" class="input" placeholder="TRK123456">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">سبب الـ Chargeback</label>
+        <select id="cb-reason" class="input">
+          <option value="item_not_received">لم يصل المنتج</option>
+          <option value="not_as_described">المنتج مختلف عن الوصف</option>
+          <option value="unauthorized">معاملة غير مصرح بها</option>
+          <option value="duplicate">معاملة مكررة</option>
+          <option value="credit_not_processed">لم يتم رد المبلغ</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">وصف المنتج أو الخدمة</label>
+        <textarea id="cb-description" class="input" placeholder="اكتب وصفاً تفصيلياً للمنتج أو الخدمة..."></textarea>
+      </div>
+      <button class="btn-ai" id="cb-btn" onclick="generateChargeback()">
+        🤖 توليد رد AI احترافي
+      </button>
+    </div>
+    <div id="cb-result" style="display:none" class="result-card">
+      <div class="result-title">✅ الرد الجاهز للإرسال</div>
+      <div class="result-text" id="cb-result-text"></div>
+      <button class="btn-copy" onclick="copyText('cb-result-text')">📋 نسخ الرد</button>
+    </div>
+    <div id="cb-list" style="margin-top:1.5rem"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- PAGE 7: SPEND -->
+<!-- ═══════════════════════════════════════ -->
+<div id="page-spend" class="page">
+  <div class="feat-header">
+    <button class="btn-back" onclick="showPage('page-dashboard')">← رجوع</button>
+    <span class="feat-title">💸 Spend Intelligence</span>
+  </div>
+  <div class="feat-content">
+    <div class="card">
+      <div class="card-title">الصق كشف حسابك أو قائمة مصاريفك</div>
+      <textarea id="spend-text" class="input" rows="8"
+        placeholder="مثال:&#10;2024-01-01 Netflix 15.99&#10;2024-01-03 Spotify 9.99&#10;2024-01-05 AWS 120.00&#10;2024-01-07 Adobe 54.99&#10;2024-01-10 Zoom 14.99&#10;2024-01-15 Dropbox 11.99"></textarea>
+      <button class="btn-ai" id="spend-btn" onclick="analyzeSpend()" style="margin-top:1rem">
+        🔍 تحليل المصاريف بالذكاء الاصطناعي
+      </button>
+    </div>
+    <div id="spend-result" style="display:none">
+      <div class="big-number">
+        <div class="amount" id="spend-waste">$0</div>
+        <div class="label">هدر شهري مكتشف</div>
+        <div class="savings" id="spend-savings"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">📋 الاشتراكات المكتشفة</div>
+        <div id="spend-subs"></div>
+      </div>
+      <div class="card" id="spend-fees-card" style="display:none">
+        <div class="card-title" style="color:var(--red)">⚠️ رسوم مخفية</div>
+        <div id="spend-fees"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- PAGE 8: CONTRACTS -->
+<!-- ═══════════════════════════════════════ -->
+<div id="page-contracts" class="page">
+  <div class="feat-header">
+    <button class="btn-back" onclick="showPage('page-dashboard')">← رجوع</button>
+    <span class="feat-title">📄 Contract AI</span>
+  </div>
+  <div class="feat-content">
+    <div class="card">
+      <div class="card-title">تحليل عقد جديد</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">اسم المورد</label>
+          <input type="text" id="con-vendor" class="input" placeholder="اسم الشركة">
+        </div>
+        <div class="form-group">
+          <label class="form-label">التكلفة الشهرية ($)</label>
+          <input type="number" id="con-cost" class="input" placeholder="500">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">نص العقد</label>
+        <textarea id="con-text" class="input" rows="8"
+          placeholder="الصق نص العقد هنا للتحليل..."></textarea>
+      </div>
+      <button class="btn-ai" id="con-btn" onclick="analyzeContract()">
+        ⚖️ تحليل العقد بالذكاء الاصطناعي
+      </button>
+    </div>
+    <div id="con-result" style="display:none" class="card">
+      <div class="risk-gauge">
+        <div class="risk-number" id="con-score">0</div>
+        <div class="risk-label">درجة المخاطرة من 10</div>
+      </div>
+      <div id="con-renewal-alert" style="display:none" class="alert-banner"></div>
+      <hr class="divider">
+      <div class="card-title">⚠️ المخاطر المكتشفة</div>
+      <div id="con-risks"></div>
+      <hr class="divider">
+      <div class="card-title" style="color:var(--green)">💡 التوصيات</div>
+      <div id="con-recommendations"></div>
+    </div>
+    <div id="con-list" style="margin-top:1rem"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- PAGE 9: INVOICE -->
+<!-- ═══════════════════════════════════════ -->
+<div id="page-invoice" class="page">
+  <div class="feat-header">
+    <button class="btn-back" onclick="showPage('page-dashboard')">← رجوع</button>
+    <span class="feat-title">🧾 Invoice Analyzer</span>
+  </div>
+  <div class="feat-content">
+    <div class="card">
+      <div class="card-title">تحليل فاتورة</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">اسم المورد</label>
+          <input type="text" id="inv-vendor" class="input" placeholder="اسم الشركة">
+        </div>
+        <div class="form-group">
+          <label class="form-label">المبلغ الإجمالي ($)</label>
+          <input type="number" id="inv-amount" class="input" placeholder="1000">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">نص الفاتورة أو تفاصيلها</label>
+        <textarea id="inv-text" class="input" rows="7"
+          placeholder="الصق تفاصيل الفاتورة هنا...&#10;مثال:&#10;- استضافة سيرفر: $200&#10;- رسوم إضافية غير محددة: $150&#10;- دعم تقني: $300&#10;- ضريبة: $50"></textarea>
+      </div>
+      <button class="btn-ai" id="inv-btn" onclick="analyzeInvoice()">
+        🔍 تحليل الفاتورة بالذكاء الاصطناعي
+      </button>
+    </div>
+    <div id="inv-result" style="display:none" class="result-card">
+      <div class="result-title">📊 نتائج تحليل الفاتورة</div>
+      <div class="result-text" id="inv-result-text"></div>
+      <button class="btn-copy" onclick="copyText('inv-result-text')">📋 نسخ التقرير</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- PAGE 10: CASH FLOW -->
+<!-- ═══════════════════════════════════════ -->
+<div id="page-cashflow" class="page">
+  <div class="feat-header">
+    <button class="btn-back" onclick="showPage('page-dashboard')">← رجوع</button>
+    <span class="feat-title">📊 Cash Flow Predictor</span>
+  </div>
+  <div class="feat-content">
+    <div class="card">
+      <div class="card-title">أدخل بياناتك المالية</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">الدخل الشهري ($)</label>
+          <input type="number" id="cf-income" class="input" placeholder="5000">
+        </div>
+        <div class="form-group">
+          <label class="form-label">المصاريف الثابتة ($)</label>
+          <input type="number" id="cf-fixed" class="input" placeholder="2000">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">المصاريف المتغيرة ($)</label>
+          <input type="number" id="cf-variable" class="input" placeholder="1000">
+        </div>
+        <div class="form-group">
+          <label class="form-label">الديون الشهرية ($)</label>
+          <input type="number" id="cf-debt" class="input" placeholder="500">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">أي مصاريف استثنائية متوقعة؟</label>
+        <textarea id="cf-extra" class="input" rows="3"
+          placeholder="مثال: تجديد عقد سنوي $1200 في مارس، صيانة معدات $500..."></textarea>
+      </div>
+      <button class="btn-ai" id="cf-btn" onclick="predictCashFlow()">
+        📈 توقع التدفق النقدي
+      </button>
+    </div>
+    <div id="cf-result" style="display:none" class="result-card">
+      <div class="result-title">📊 توقع الأشهر الثلاثة القادمة</div>
+      <div class="result-text" id="cf-result-text"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- PAGE 11: AI ADVISOR -->
+<!-- ═══════════════════════════════════════ -->
+<div id="page-advisor" class="page">
+  <div class="feat-header">
+    <button class="btn-back" onclick="showPage('page-dashboard')">← رجوع</button>
+    <span class="feat-title">🤖 AI CFO Advisor</span>
+  </div>
+  <div class="feat-content">
+    <div class="card">
+      <div class="card-title">اسأل مستشارك المالي الذكي</div>
+      <div id="advisor-chat" style="min-height:200px;margin-bottom:1rem;display:flex;flex-direction:column;gap:0.75rem"></div>
+      <div style="display:flex;gap:0.5rem">
+        <input type="text" id="advisor-input" class="input"
+          placeholder="مثال: كيف أقلل مصاريفي؟ أو كيف أتعامل مع chargeback؟"
+          onkeydown="if(event.key==='Enter')sendAdvisor()">
+        <button class="btn-ai" onclick="sendAdvisor()" style="width:auto;padding:0.8rem 1.2rem">
+          إرسال
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- JAVASCRIPT -->
+<!-- ═══════════════════════════════════════ -->
+<script>
+const GROQ_KEY = 'gsk_wsX9Tem' + 'Dn9XQFi7flntQWGdyb3FYUHJnoYpkcEuIdhaZFO81yZfn'
+const SUPABASE_URL = 'https://xwrnureztymlijhyfntn.supabase.co'
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh3cm51cmV6dHltbGlqaHlmbnRuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ2MzI5MzUsImV4cCI6MjA5MDIwODkzNX0.PckXiWqz4-FPQoZkxqoEM16f3vivvE7qMUgZ9XZoqso'
+
+let currentUser = null
+let chargebacks = []
+let contracts = []
+let advisorHistory = []
+
+// ═══ NAVIGATION ═══
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'))
+  document.getElementById(id).classList.add('active')
+  window.scrollTo(0, 0)
+}
+
+// ═══ GROQ API ═══
+async function callGroq(prompt, systemPrompt = '') {
+  const messages = []
+  if (systemPrompt) messages.push({ role: 'system', content: systemPrompt })
+  messages.push({ role: 'user', content: prompt })
+
+  const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${GROQ_KEY}`
+    },
+    body: JSON.stringify({
+      model: 'llama3-70b-8192',
+      messages,
+      max_tokens: 1500,
+      temperature: 0.7
+    })
+  })
+  const data = await res.json()
+  if (!data.choices) throw new Error('Groq API error')
+  return data.choices[0].message.content
+}
+
+// ═══ SUPABASE ═══
+async function sbFetch(path, method = 'GET', body = null) {
+  const opts = {
+    method,
+    headers: {
+      'apikey': SUPABASE_KEY,
+      'Authorization': `Bearer ${currentUser?.token || SUPABASE_KEY}`,
+      'Content-Type': 'application/json',
+      'Prefer': 'return=representation'
+    }
+  }
+  if (body) opts.body = JSON.stringify(body)
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, opts)
+  return res.json()
+}
+
+// ═══ AUTH ═══
+async function handleSignup() {
+  const name = document.getElementById('signup-name').value.trim()
+  const email = document.getElementById('signup-email').value.trim()
+  const password = document.getElementById('signup-password').value
+
+  if (!name || !email || !password) {
+    showMsg('signup-error', 'يرجى ملء جميع الحقول')
+    return
+  }
+  if (password.length < 8) {
+    showMsg('signup-error', 'كلمة المرور يجب أن تكون 8 أحرف على الأقل')
+    return
+  }
+
+  const btn = document.getElementById('signup-btn')
+  btn.disabled = true
+  btn.textContent = 'جاري الإنشاء...'
+
+  try {
+    const res = await fetch(`${SUPABASE_URL}/auth/v1/signup`, {
+      method: 'POST',
+      headers: { 'apikey': SUPABASE_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password, data: { full_name: name } })
+    })
+    const data = await res.json()
+
+    if (data.error) {
+      showMsg('signup-error', data.error.message || 'خطأ في الإنشاء')
+      return
+    }
+
+    if (data.access_token) {
+      loginUser(data, name, email)
+    } else {
+      showMsg('signup-success', '✅ تم الإنشاء! تحقق من بريدك لتأكيد الحساب')
+    }
+  } catch (e) {
+    showMsg('signup-error', 'خطأ في الاتصال، حاول مجدداً')
+  } finally {
+    btn.disabled = false
+    btn.textContent = 'إنشاء الحساب مجاناً'
+  }
+}
+
+async function handleLogin() {
+  const email = document.getElementById('login-email').value.trim()
+  const password = document.getElementById('login-password').value
+
+  if (!email || !password) {
+    showMsg('login-error', 'يرجى إدخال البريد وكلمة المرور')
+    return
+  }
+
+  const btn = document.getElementById('login-btn')
+  btn.disabled = true
+  btn.textContent = 'جاري الدخول...'
+
+  try {
+    const res = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+      method: 'POST',
+      headers: { 'apikey': SUPABASE_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    })
+    const data = await res.json()
+
+    if (data.error || data.error_description) {
+      showMsg('login-error', 'بريد إلكتروني أو كلمة مرور غير صحيحة')
+      return
+    }
+
+    loginUser(data, data.user?.user_metadata?.full_name || email, email)
+  } catch (e) {
+    showMsg('login-error', 'خطأ في الاتصال، حاول مجدداً')
+  } finally {
+    btn.disabled = false
+    btn.textContent = 'دخول'
+  }
+}
+
+async function handleForgot() {
+  const email = document.getElementById('forgot-email').value.trim()
+  if (!email) { showMsg('forgot-error', 'أدخل بريدك الإلكتروني'); return }
+
+  try {
+    await fetch(`${SUPABASE_URL}/auth/v1/recover`, {
+      method: 'POST',
+      headers: { 'apikey': SUPABASE_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    })
+    showMsg('forgot-success', '✅ تم الإرسال! تحقق من بريدك الإلكتروني')
+  } catch (e) {
+    showMsg('forgot-error', 'خطأ في الإرسال')
+  }
+}
+
+function loginUser(data, name, email) {
+  currentUser = {
+    token: data.access_token,
+    name: name || email,
+    email: email
+  }
+  localStorage.setItem('clearcfo_user', JSON.stringify(currentUser))
+  document.getElementById('nav-email').textContent = email
+  document.getElementById('dash-greeting').textContent =
+    `مرحباً ${name || email} 👋`
+  showPage('page-dashboard')
+}
+
+function handleLogout() {
+  currentUser = null
+  localStorage.removeItem('clearcfo_user')
+  showPage('page-login')
+}
+
+function checkSession() {
+  const saved = localStorage.getItem('clearcfo_user')
+  if (saved) {
+    try {
+      currentUser = JSON.parse(saved)
+      document.getElementById('nav-email').textContent = currentUser.email
+      document.getElementById('dash-greeting').textContent =
+        `مرحباً ${currentUser.name} 👋`
+    } catch(e) {}
+  }
+}
+
+// ═══ HELPERS ═══
+function showMsg(id, msg) {
+  const el = document.getElementById(id)
+  if (!el) return
+  el.textContent = msg
+  el.style.display = 'block'
+  setTimeout(() => { el.style.display = 'none' }, 5000)
+}
+
+function setLoading(btnId, loading, text, loadText) {
+  const btn = document.getElementById(btnId)
+  if (!btn) return
+  btn.disabled = loading
+  btn.innerHTML = loading
+    ? `<span class="loading">⟳</span> ${loadText}`
+    : text
+}
+
+function copyText(id) {
+  const text = document.getElementById(id).textContent
+  navigator.clipboard.writeText(text).then(() => {
+    alert('✅ تم النسخ!')
+  })
+}
+
+// ═══ FEATURE 1: CHARGEBACKS ═══
+async function generateChargeback() {
+  const customer = document.getElementById('cb-customer').value.trim()
+  const amount = document.getElementById('cb-amount').value
+  const date = document.getElementById('cb-date').value
+  const reason = document.getElementById('cb-reason').value
+  const description = document.getElementById('cb-description').value.trim()
+  const tracking = document.getElementById('cb-tracking').value.trim()
+
+  if (!customer || !amount || !description) {
+    alert('يرجى ملء اسم العميل والمبلغ والوصف')
+    return
+  }
+
+  setLoading('cb-btn', true, '🤖 توليد رد AI احترافي', 'جاري التوليد...')
+
+  try {
+    const prompt = `أنت خبير في chargebacks والنزاعات المالية. اكتب رد نزاع احترافي ومقنع باللغة الإنجليزية للبنك.
+
+معلومات النزاع:
+- اسم العميل: ${customer}
+- المبلغ: $${amount}
+- التاريخ: ${date}
+- السبب: ${reason}
+- وصف المنتج/الخدمة: ${description}
+- رقم التتبع: ${tracking || 'غير متاح'}
+
+اكتب رداً احترافياً يتضمن:
+1. مقدمة واضحة
+2. شرح مفصل للمعاملة
+3. الأدلة المتاحة
+4. طلب رفض الـ chargeback
+5. خاتمة احترافية
+
+اجعل الرد مقنعاً وقانونياً ويزيد من فرص الفوز.`
+
+    const response = await callGroq(prompt)
+
+    document.getElementById('cb-result-text').textContent = response
+    document.getElementById('cb-result').style.display = 'block'
+
+    chargebacks.push({ customer, amount, date, reason, status: 'pending', response })
+    updateCBStats()
+    renderCBList()
+  } catch (e) {
+    alert('خطأ في الاتصال بـ AI. تحقق من مفتاح Groq.')
+  } finally {
+    setLoading('cb-btn', false, '🤖 توليد رد AI احترافي', '')
+  }
+}
+
+function updateCBStats() {
+  document.getElementById('cb-total').textContent = chargebacks.length
+  document.getElementById('cb-won').textContent =
+    chargebacks.filter(c => c.status === 'submitted').length
+  document.getElementById('cb-pending').textContent =
+    chargebacks.filter(c => c.status === 'pending').length
+}
+
+function renderCBList() {
+  const el = document.getElementById('cb-list')
+  if (chargebacks.length === 0) { el.innerHTML = ''; return }
+  el.innerHTML = `
+    <div class="card">
+      <div class="card-title">السجل</div>
+      ${chargebacks.map((c, i) => `
+        <div class="list-item">
+          <div class="list-item-left">
+            <h4>${c.customer}</h4>
+            <p>${c.date || 'بدون تاريخ'} · ${c.reason}</p>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.75rem">
+            <span style="color:var(--green);font-weight:700">$${c.amount}</span>
+            <span class="badge badge-yellow">${c.status}</span>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `
+}
+
+// ═══ FEATURE 2: SPEND ═══
+async function analyzeSpend() {
+  const text = document.getElementById('spend-text').value.trim()
+  if (!text) { alert('يرجى إدخال بيانات المصاريف'); return }
+
+  setLoading('spend-btn', true, '🔍 تحليل المصاريف بالذكاء الاصطناعي', 'جاري التحليل...')
+
+  try {
+    const prompt = `حلل هذه المصاريف وأرجع JSON فقط بدون أي نص آخر:
+
+${text}
+
+أرجع هذا الشكل بالضبط:
+{"subscriptions":[{"name":"Netflix","amount":15.99,"frequency":"شهري","recommendation":"cancel"}],"hidden_fees":[{"description":"رسوم غير محددة","amount":50}],"total_waste":150,"savings_potential":1800}
+
+recommendation يكون "cancel" أو "keep" فقط.`
+
+    const response = await callGroq(prompt)
+    const clean = response.replace(/```json|```/g, '').trim()
+    const data = JSON.parse(clean)
+
+    document.getElementById('spend-waste').textContent = `$${data.total_waste}`
+    document.getElementById('spend-savings').textContent =
+      `💰 وفّر حتى $${data.savings_potential}/سنة`
+
+    const subsEl = document.getElementById('spend-subs')
+    subsEl.innerHTML = data.subscriptions.map(s => `
+      <div class="list-item">
+        <div class="list-item-left">
+          <h4>${s.name}</h4>
+          <p>${s.frequency}</p>
+        </div>
+        <div style="display:flex;align-items:center;gap:0.75rem">
+          <span style="font-weight:700">$${s.amount}</span>
+          <span class="badge ${s.recommendation === 'cancel' ? 'badge-red' : 'badge-green'}">
+            ${s.recommendation === 'cancel' ? '❌ ألغِ' : '✅ احتفظ'}
+          </span>
+        </div>
+      </div>
+    `).join('')
+
+    if (data.hidden_fees && data.hidden_fees.length > 0) {
+      document.getElementById('spend-fees-card').style.display = 'block'
+      document.getElementById('spend-fees').innerHTML = data.hidden_fees.map(f => `
+        <div class="list-item">
+          <div class="list-item-left"><h4>${f.description}</h4></div>
+          <span style="color:var(--red);font-weight:700">$${f.amount}</span>
+        </div>
+      `).join('')
+    }
+
+    document.getElementById('spend-result').style.display = 'block'
+  } catch (e) {
+    alert('خطأ في التحليل. تأكد من صحة البيانات.')
+  } finally {
+    setLoading('spend-btn', false, '🔍 تحليل المصاريف بالذكاء الاصطناعي', '')
+  }
+}
+
+// ═══ FEATURE 3: CONTRACTS ═══
+async function analyzeContract() {
+  const vendor = document.getElementById('con-vendor').value.trim()
+  const cost = document.getElementById('con-cost').value
+  const text = document.getElementById('con-text').value.trim()
+
+  if (!vendor || !text) { alert('يرجى إدخال اسم المورد ونص العقد'); return }
+
+  setLoading('con-btn', true, '⚖️ تحليل العقد بالذكاء الاصطناعي', 'جاري التحليل...')
+
+  try {
+    const prompt = `أنت محامٍ خبير. حلل هذا العقد وأرجع JSON فقط:
+
+المورد: ${vendor}
+التكلفة: $${cost}/شهر
+العقد: ${text}
+
+أرجع هذا الشكل بالضبط:
+{"risk_score":7,"auto_renewal":true,"renewal_date":"2025-03-01","notice_period_days":30,"risks":[{"severity":"high","description":"تجديد تلقائي بدون إشعار مسبق"}],"recommendations":["راجع بند التجديد التلقائي","اطلب فترة إشعار أطول"]}`
+
+    const response = await callGroq(prompt)
+    const clean = response.replace(/```json|```/g, '').trim()
+    const data = JSON.parse(clean)
+
+    const score = data.risk_score
+    const scoreEl = document.getElementById('con-score')
+    scoreEl.textContent = `${score}/10`
+    scoreEl.style.color = score <= 3 ? 'var(--green)' : score <= 6 ? 'var(--yellow)' : 'var(--red)'
+
+    const alertEl = document.getElementById('con-renewal-alert')
+    if (data.auto_renewal) {
+      alertEl.style.display = 'block'
+      alertEl.innerHTML = `⚠️ <strong>تجديد تلقائي</strong> في ${data.renewal_date} — يجب الإلغاء قبل ${data.notice_period_days} يوم`
+    }
+
+    document.getElementById('con-risks').innerHTML = data.risks.map(r => `
+      <div class="list-item" style="margin-bottom:0.5rem">
+        <span class="badge ${r.severity === 'high' ? 'badge-red' : r.severity === 'medium' ? 'badge-yellow' : 'badge-blue'}" style="margin-left:0.75rem">
+          ${r.severity === 'high' ? 'عالي' : r.severity === 'medium' ? 'متوسط' : 'منخفض'}
+        </span>
+        <span style="font-size:0.875rem">${r.description}</span>
+      </div>
+    `).join('')
+
+    document.getElementById('con-recommendations').innerHTML = data.recommendations.map(r => `
+      <div style="padding:0.75rem;background:var(--bg);border-radius:8px;margin-bottom:0.5rem;font-size:0.875rem">
+        ✓ ${r}
+      </div>
+    `).join('')
+
+    document.getElementById('con-result').style.display = 'block'
+    contracts.push({ vendor, cost, ...data })
+    renderContractsList()
+  } catch (e) {
+    alert('خطأ في تحليل العقد.')
+  } finally {
+    setLoading('con-btn', false, '⚖️ تحليل العقد بالذكاء الاصطناعي', '')
+  }
+}
+
+function renderContractsList() {
+  const el = document.getElementById('con-list')
+  if (contracts.length === 0) return
+  el.innerHTML = `
+    <div class="card">
+      <div class="card-title">العقود المحللة</div>
+      ${contracts.map(c => `
+        <div class="list-item">
+          <div class="list-item-left">
+            <h4>${c.vendor}</h4>
+            <p>$${c.cost}/شهر · تجديد: ${c.renewal_date || 'غير محدد'}</p>
+          </div>
+          <span class="badge ${c.risk_score > 6 ? 'badge-red' : c.risk_score > 3 ? 'badge-yellow' : 'badge-green'}">
+            خطر ${c.risk_score}/10
+          </span>
+        </div>
+      `).join('')}
+    </div>
+  `
+}
+
+// ═══ FEATURE 4: INVOICE ═══
+async function analyzeInvoice() {
+  const vendor = document.getElementById('inv-vendor').value.trim()
+  const amount = document.getElementById('inv-amount').value
+  const text = document.getElementById('inv-text').value.trim()
+
+  if (!text) { alert('يرجى إدخال تفاصيل الفاتورة'); return }
+
+  setLoading('inv-btn', true, '🔍 تحليل الفاتورة بالذكاء الاصطناعي', 'جاري التحليل...')
+
+  try {
+    const prompt = `أنت خبير محاسب. حلل هذه الفاتورة بالعربية:
+
+المورد: ${vendor || 'غير محدد'}
+المبلغ الإجمالي: $${amount || 'غير محدد'}
+تفاصيل الفاتورة: ${text}
+
+قدم تقريراً يشمل:
+1. ملخص الفاتورة
+2. أي رسوم مشبوهة أو غير مبررة
+3. أخطاء محتملة في الحساب
+4. مقارنة الأسعار بالسوق
+5. توصيات للتفاوض أو الاعتراض
+6. هل الفاتورة معقولة؟ (نعم/لا مع السبب)`
+
+    const response = await callGroq(prompt)
+    document.getElementById('inv-result-text').textContent = response
+    document.getElementById('inv-result').style.display = 'block'
+  } catch (e) {
+    alert('خطأ في تحليل الفاتورة.')
+  } finally {
+    setLoading('inv-btn', false, '🔍 تحليل الفاتورة بالذكاء الاصطناعي', '')
+  }
+}
+
+// ═══ FEATURE 5: CASH FLOW ═══
+async function predictCashFlow() {
+  const income = document.getElementById('cf-income').value
+  const fixed = document.getElementById('cf-fixed').value
+  const variable = document.getElementById('cf-variable').value
+  const debt = document.getElementById('cf-debt').value
+  const extra = document.getElementById('cf-extra').value.trim()
+
+  if (!income || !fixed) { alert('يرجى إدخال الدخل والمصاريف الثابتة'); return }
+
+  setLoading('cf-btn', true, '📈 توقع التدفق النقدي', 'جاري التحليل...')
+
+  try {
+    const prompt = `أنت CFO خبير. قدم توقعاً للتدفق النقدي بالعربية:
+
+البيانات:
+- الدخل الشهري: $${income}
+- المصاريف الثابتة: $${fixed}
+- المصاريف المتغيرة: $${variable || 0}
+- أقساط الديون: $${debt || 0}
+- مصاريف استثنائية: ${extra || 'لا يوجد'}
+
+قدم:
+1. الوضع الحالي (صافي شهري)
+2. توقع الشهر الأول القادم مع السيناريو الأفضل والأسوأ
+3. توقع الشهر الثاني
+4. توقع الشهر الثالث
+5. هل هناك خطر نقص السيولة؟
+6. 3 توصيات عملية لتحسين التدفق النقدي
+7. نقطة التعادل الشهرية
+
+اجعل التقرير واضحاً مع أرقام محددة.`
+
+    const response = await callGroq(prompt)
+    document.getElementById('cf-result-text').textContent = response
+    document.getElementById('cf-result').style.display = 'block'
+  } catch (e) {
+    alert('خطأ في التحليل.')
+  } finally {
+    setLoading('cf-btn', false, '📈 توقع التدفق النقدي', '')
+  }
+}
+
+// ═══ FEATURE 6: AI ADVISOR ═══
+async function sendAdvisor() {
+  const input = document.getElementById('advisor-input')
+  const msg = input.value.trim()
+  if (!msg) return
+
+  input.value = ''
+  const chatEl = document.getElementById('advisor-chat')
+
+  chatEl.innerHTML += `
+    <div style="align-self:flex-end;background:var(--green);color:white;padding:0.75rem 1rem;border-radius:12px 12px 4px 12px;max-width:85%;font-size:0.875rem">
+      ${msg}
+    </div>
+  `
+
+  chatEl.innerHTML += `
+    <div id="advisor-loading" style="align-self:flex-start;background:var(--card2);padding:0.75rem 1rem;border-radius:12px 12px 12px 4px;color:var(--muted);font-size:0.875rem">
+      ⟳ جاري التفكير...
+    </div>
+  `
+  chatEl.scrollTop = chatEl.scrollHeight
+
+  advisorHistory.push({ role: 'user', content: msg })
+
+  try {
+    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${GROQ_KEY}`
+      },
+      body: JSON.stringify({
+        model: 'llama3-70b-8192',
+        messages: [
+          {
+            role: 'system',
+            content: 'أنت CFO خبير ومستشار مالي للشركات الصغيرة. أجب بالعربية بشكل واضح ومختصر ومفيد. قدم نصائح عملية وأرقام محددة عندما يكون ذلك ممكناً.'
+          },
+          ...advisorHistory
+        ],
+        max_tokens: 800
+      })
+    })
+    const data = await res.json()
+    const reply = data.choices[0].message.content
+    advisorHistory.push({ role: 'assistant', content: reply })
+
+    document.getElementById('advisor-loading').remove()
+    chatEl.innerHTML += `
+      <div style="align-self:flex-start;background:var(--card2);padding:0.75rem 1rem;border-radius:12px 12px 12px 4px;max-width:90%;font-size:0.875rem;line-height:1.6;white-space:pre-wrap">
+        🤖 ${reply}
+      </div>
+    `
+    chatEl.scrollTop = chatEl.scrollHeight
+  } catch (e) {
+    document.getElementById('advisor-loading').remove()
+    chatEl.innerHTML += `
+      <div style="align-self:flex-start;color:var(--red);font-size:0.875rem">خطأ في الاتصال</div>
+    `
+  }
+}
+
+// ═══ INIT ═══
+checkSession()
+</script>
+</body>
+</html>
