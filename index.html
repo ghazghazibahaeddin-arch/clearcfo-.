@@ -623,17 +623,13 @@ let contracts=[]
 let advisorHistory=[]
 
 function showPage(id){
-  try{
-    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
-    const target=document.getElementById(id)
-    if(target){
-      target.classList.add('active')
-      window.scrollTo(0,0)
-    }else{
-      console.error('Page not found:',id)
-    }
-  }catch(e){
-    console.error('Navigation error:',e)
+  document.querySelectorAll('.page').forEach(p=>{
+    p.style.display='none'
+  })
+  const target=document.getElementById(id)
+  if(target){
+    target.style.display='block'
+    window.scrollTo(0,0)
   }
   }
 
