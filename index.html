@@ -623,10 +623,19 @@ let contracts=[]
 let advisorHistory=[]
 
 function showPage(id){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
-  document.getElementById(id).classList.add('active')
-  window.scrollTo(0,0)
-}
+  try{
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
+    const target=document.getElementById(id)
+    if(target){
+      target.classList.add('active')
+      window.scrollTo(0,0)
+    }else{
+      console.error('Page not found:',id)
+    }
+  }catch(e){
+    console.error('Navigation error:',e)
+  }
+  }
 
 async function callGroq(prompt,systemPrompt=''){
   const messages=[]
