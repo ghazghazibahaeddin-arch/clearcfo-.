@@ -6,15 +6,10 @@
 <title>ClearCFO — Your AI Financial Officer</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --bg:#0a0f1e;--card:#111827;--card2:#1a2234;
-  --green:#10b981;--green2:#059669;--red:#ef4444;
-  --yellow:#f59e0b;--blue:#3b82f6;
-  --text:#f1f5f9;--muted:#64748b;--border:#1e293b
-}
+:root{--bg:#0a0f1e;--card:#111827;--card2:#1a2234;--green:#10b981;--green2:#059669;--red:#ef4444;--yellow:#f59e0b;--blue:#3b82f6;--text:#f1f5f9;--muted:#64748b;--border:#1e293b}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
-.page{display:none !important;min-height:100vh}
-.page.active{display:block !important}
+.page{display:none;min-height:100vh}
+.page.active{display:block}
 .landing-hero{min-height:100vh;background:linear-gradient(135deg,#0a0f1e,#0f2027,#0a0f1e);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;text-align:center}
 .logo-big{width:80px;height:80px;background:linear-gradient(135deg,var(--green),var(--blue));border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:900;margin:0 auto 1.5rem;box-shadow:0 20px 60px #10b98133}
 .hero-badge{background:#10b98122;border:1px solid #10b98144;color:var(--green);padding:.4rem 1rem;border-radius:999px;font-size:.8rem;margin-bottom:1.5rem;display:inline-block}
@@ -22,9 +17,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
 .hero-sub{color:var(--muted);font-size:1.1rem;margin-bottom:2.5rem;max-width:500px;line-height:1.6}
 .hero-btns{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;margin-bottom:3rem}
 .btn-primary{background:linear-gradient(135deg,var(--green),var(--green2));color:white;border:none;padding:.9rem 2rem;border-radius:12px;font-size:1rem;font-weight:700;cursor:pointer;box-shadow:0 8px 30px #10b98144;transition:all .2s}
-.btn-primary:hover{transform:translateY(-2px)}
 .btn-secondary{background:transparent;color:var(--text);border:1px solid var(--border);padding:.9rem 2rem;border-radius:12px;font-size:1rem;cursor:pointer;transition:all .2s}
-.btn-secondary:hover{border-color:var(--green);color:var(--green)}
 .features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem;max-width:900px;margin:0 auto 3rem;padding:0 1rem}
 .feature-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;text-align:left}
 .feature-icon{font-size:2rem;margin-bottom:.75rem}
@@ -52,8 +45,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
 .input{width:100%;padding:.8rem 1rem;background:var(--bg);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:.95rem;transition:border-color .2s}
 .input:focus{outline:none;border-color:var(--green)}
 .btn-full{width:100%;padding:.9rem;background:linear-gradient(135deg,var(--green),var(--green2));color:white;border:none;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;margin-top:.5rem;transition:all .2s}
-.btn-full:hover{opacity:.9;transform:translateY(-1px)}
-.btn-full:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.btn-full:disabled{opacity:.6;cursor:not-allowed}
 .auth-link{text-align:center;margin-top:1rem;font-size:.875rem;color:var(--muted)}
 .auth-link a{color:var(--green);cursor:pointer}
 .error-msg{background:#ef444422;border:1px solid #ef444444;color:var(--red);padding:.75rem;border-radius:8px;font-size:.875rem;margin-bottom:1rem;text-align:center;display:none}
@@ -70,7 +62,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
 .dash-sub{color:var(--muted);font-size:.9rem;margin-bottom:2rem}
 .tools-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
 .tool-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
-.tool-card::before{content:'';position:absolute;top:0;right:0;width:100%;height:3px;background:var(--accent,var(--green))}
+.tool-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:var(--accent,var(--green))}
 .tool-card:hover{transform:translateY(-3px);border-color:var(--accent,var(--green))}
 .tool-icon{font-size:2rem;margin-bottom:.75rem}
 .tool-name{font-size:1rem;font-weight:700;margin-bottom:.4rem}
@@ -119,882 +111,540 @@ textarea.input{resize:vertical;min-height:120px;font-family:inherit}
 @keyframes spin{to{transform:rotate(360deg)}}
 .forgot-link{text-align:right;margin-top:-.5rem;margin-bottom:1rem}
 .forgot-link a{color:var(--muted);font-size:.8rem;cursor:pointer}
-.forgot-link a:hover{color:var(--green)}
 </style>
 </head>
 <body>
 
-<!-- LANDING -->
 <div id="page-landing" class="page active">
-  <div class="landing-hero">
-    <div class="logo-big">CF</div>
-    <div class="hero-badge">🤖 Powered by AI</div>
-    <h1 class="hero-title">Your AI Financial Officer</h1>
-    <p class="hero-sub">Recover chargebacks, detect waste, analyze contracts — all with AI in one place. Save thousands every month.</p>
-    <div class="hero-btns">
-      <button class="btn-primary" onclick="document.querySelectorAll('.page').forEach(p=>p.style.display='none');document.getElementById('page-signup').style.display='block'">
-      <button class="btn-secondary" onclick="showPage('page-login')">Sign In</button>
-    </div>
-  </div>
-  <div class="features-grid">
-    <div class="feature-card"><div class="feature-icon">⚡</div><h3>Chargeback Autopilot</h3><p>AI generates professional dispute letters in seconds, increasing win rate by 80%</p></div>
-    <div class="feature-card"><div class="feature-icon">💸</div><h3>Spend Intelligence</h3><p>Analyze bank statements and detect wasted subscriptions and hidden fees instantly</p></div>
-    <div class="feature-card"><div class="feature-icon">📄</div><h3>Contract AI</h3><p>Analyze contracts and detect risky clauses before you sign</p></div>
-    <div class="feature-card"><div class="feature-icon">🧾</div><h3>Invoice Analyzer</h3><p>Automatically detect errors and overcharges in your invoices</p></div>
-    <div class="feature-card"><div class="feature-icon">📊</div><h3>Cash Flow Predictor</h3><p>Predict your cash flow for the next 3 months and avoid problems</p></div>
-    <div class="feature-card"><div class="feature-icon">🤖</div><h3>AI CFO Advisor</h3><p>Get personalized financial advice from your AI CFO 24/7</p></div>
-  </div>
-  <div class="pricing-section">
-    <h2 class="section-title">Simple, Transparent Pricing</h2>
-    <div class="pricing-grid">
-      <div class="price-card">
-        <div class="price-name">Starter</div>
-        <div class="price-amount">$49</div>
-        <div class="price-period">per month</div>
-        <ul class="price-features">
-          <li>Chargeback Autopilot</li>
-          <li>Spend Intelligence</li>
-          <li>Invoice Analyzer</li>
-          <li>AI Support</li>
-        </ul>
-        <button class="btn-full" onclick="window.open('https://radhiayt.gumroad.com/l/fvrae','_blank')">Get Started →</button>
-      </div>
-      <div class="price-card featured">
-        <div class="price-badge">Most Popular</div>
-        <div class="price-name">Pro</div>
-        <div class="price-amount">$99</div>
-        <div class="price-period">per month</div>
-        <ul class="price-features">
-          <li>Everything in Starter</li>
-          <li>Contract AI</li>
-          <li>Cash Flow Predictor</li>
-          <li>AI CFO Advisor</li>
-          <li>Priority Support</li>
-        </ul>
-        <button class="btn-full" onclick="window.open('https://radhiayt.gumroad.com/l/kcbbjx','_blank')">Get Pro →</button>
-      </div>
-      <div class="price-card">
-        <div class="price-name">Enterprise</div>
-        <div class="price-amount">$299</div>
-        <div class="price-period">per month</div>
-        <ul class="price-features">
-          <li>Everything in Pro</li>
-          <li>API Access</li>
-          <li>Custom Onboarding</li>
-          <li>Dedicated Manager</li>
-          <li>Unlimited Team</li>
-        </ul>
-        <button class="btn-full" onclick="window.open('https://radhiayt.gumroad.com/l/pevgar','_blank')">Get Enterprise →</button>
-      </div>
-    </div>
-  </div>
+<div class="landing-hero">
+<div class="logo-big">CF</div>
+<div class="hero-badge">🤖 Powered by AI</div>
+<h1 class="hero-title">Your AI Financial Officer</h1>
+<p class="hero-sub">Recover chargebacks, detect waste, analyze contracts — all with AI in one place.</p>
+<div class="hero-btns">
+<button class="btn-primary" id="btn-start">Start Free →</button>
+<button class="btn-secondary" id="btn-signin">Sign In</button>
+</div>
+</div>
+<div class="features-grid">
+<div class="feature-card"><div class="feature-icon">⚡</div><h3>Chargeback Autopilot</h3><p>AI generates professional dispute letters in seconds, increasing win rate by 80%</p></div>
+<div class="feature-card"><div class="feature-icon">💸</div><h3>Spend Intelligence</h3><p>Analyze bank statements and detect wasted subscriptions and hidden fees</p></div>
+<div class="feature-card"><div class="feature-icon">📄</div><h3>Contract AI</h3><p>Analyze contracts and detect risky clauses before you sign</p></div>
+<div class="feature-card"><div class="feature-icon">🧾</div><h3>Invoice Analyzer</h3><p>Automatically detect errors and overcharges in your invoices</p></div>
+<div class="feature-card"><div class="feature-icon">📊</div><h3>Cash Flow Predictor</h3><p>Predict your cash flow for the next 3 months and avoid problems</p></div>
+<div class="feature-card"><div class="feature-icon">🤖</div><h3>AI CFO Advisor</h3><p>Get personalized financial advice from your AI CFO 24/7</p></div>
+</div>
+<div class="pricing-section">
+<h2 class="section-title">Simple, Transparent Pricing</h2>
+<div class="pricing-grid">
+<div class="price-card">
+<div class="price-name">Starter</div>
+<div class="price-amount">$49</div>
+<div class="price-period">per month</div>
+<ul class="price-features"><li>Chargeback Autopilot</li><li>Spend Intelligence</li><li>Invoice Analyzer</li><li>AI Support</li></ul>
+<button class="btn-full" id="btn-starter">Get Started →</button>
+</div>
+<div class="price-card featured">
+<div class="price-badge">Most Popular</div>
+<div class="price-name">Pro</div>
+<div class="price-amount">$99</div>
+<div class="price-period">per month</div>
+<ul class="price-features"><li>Everything in Starter</li><li>Contract AI</li><li>Cash Flow Predictor</li><li>AI CFO Advisor</li><li>Priority Support</li></ul>
+<button class="btn-full" id="btn-pro">Get Pro →</button>
+</div>
+<div class="price-card">
+<div class="price-name">Enterprise</div>
+<div class="price-amount">$299</div>
+<div class="price-period">per month</div>
+<ul class="price-features"><li>Everything in Pro</li><li>API Access</li><li>Custom Onboarding</li><li>Dedicated Manager</li><li>Unlimited Team</li></ul>
+<button class="btn-full" id="btn-enterprise">Get Enterprise →</button>
+</div>
+</div>
+</div>
 </div>
 
-<!-- LOGIN -->
 <div id="page-login" class="page">
-  <div class="auth-page">
-    <div class="auth-card">
-      <div class="auth-logo">CF</div>
-      <h2 class="auth-title">Welcome Back</h2>
-      <p class="auth-sub">Sign in to access your dashboard</p>
-      <div id="login-error" class="error-msg"></div>
-      <div id="login-success" class="success-msg"></div>
-      <div class="input-group">
-        <label class="input-label">Email</label>
-        <input type="email" id="login-email" class="input" placeholder="name@example.com">
-      </div>
-      <div class="input-group">
-        <label class="input-label">Password</label>
-        <input type="password" id="login-password" class="input" placeholder="••••••••">
-      </div>
-      <div class="forgot-link"><a onclick="showPage('page-forgot')">Forgot password?</a></div>
-      <button class="btn-full" id="login-btn" onclick="handleLogin()">Sign In</button>
-      <div class="auth-link">No account? <a onclick="showPage('page-signup')">Create one free</a></div>
-      <div class="auth-link" style="margin-top:.5rem"><a onclick="showPage('page-landing')" style="color:var(--muted)">← Back to home</a></div>
-    </div>
-  </div>
+<div class="auth-page">
+<div class="auth-card">
+<div class="auth-logo">CF</div>
+<h2 class="auth-title">Welcome Back</h2>
+<p class="auth-sub">Sign in to access your dashboard</p>
+<div id="login-error" class="error-msg"></div>
+<div id="login-success" class="success-msg"></div>
+<div class="input-group"><label class="input-label">Email</label><input type="email" id="login-email" class="input" placeholder="name@example.com"></div>
+<div class="input-group"><label class="input-label">Password</label><input type="password" id="login-password" class="input" placeholder="••••••••"></div>
+<div class="forgot-link"><a id="btn-forgot">Forgot password?</a></div>
+<button class="btn-full" id="login-btn">Sign In</button>
+<div class="auth-link">No account? <a id="btn-to-signup">Create one free</a></div>
+<div class="auth-link" style="margin-top:.5rem"><a id="btn-to-landing" style="color:var(--muted)">← Back to home</a></div>
+</div>
+</div>
 </div>
 
-<!-- SIGNUP -->
 <div id="page-signup" class="page">
-  <div class="auth-page">
-    <div class="auth-card">
-      <div class="auth-logo">CF</div>
-      <h2 class="auth-title">Create Free Account</h2>
-      <p class="auth-sub">Join and start saving money today</p>
-      <div id="signup-error" class="error-msg"></div>
-      <div id="signup-success" class="success-msg"></div>
-      <div class="input-group">
-        <label class="input-label">Full Name</label>
-        <input type="text" id="signup-name" class="input" placeholder="John Smith">
-      </div>
-      <div class="input-group">
-        <label class="input-label">Email</label>
-        <input type="email" id="signup-email" class="input" placeholder="name@example.com">
-      </div>
-      <div class="input-group">
-        <label class="input-label">Password</label>
-        <input type="password" id="signup-password" class="input" placeholder="Min 8 characters">
-      </div>
-      <button class="btn-full" id="signup-btn" onclick="handleSignup()">Create Free Account</button>
-      <div class="auth-link">Already have an account? <a onclick="showPage('page-login')">Sign in</a></div>
-    </div>
-  </div>
+<div class="auth-page">
+<div class="auth-card">
+<div class="auth-logo">CF</div>
+<h2 class="auth-title">Create Free Account</h2>
+<p class="auth-sub">Join and start saving money today</p>
+<div id="signup-error" class="error-msg"></div>
+<div id="signup-success" class="success-msg"></div>
+<div class="input-group"><label class="input-label">Full Name</label><input type="text" id="signup-name" class="input" placeholder="John Smith"></div>
+<div class="input-group"><label class="input-label">Email</label><input type="email" id="signup-email" class="input" placeholder="name@example.com"></div>
+<div class="input-group"><label class="input-label">Password</label><input type="password" id="signup-password" class="input" placeholder="Min 8 characters"></div>
+<button class="btn-full" id="signup-btn">Create Free Account</button>
+<div class="auth-link">Already have an account? <a id="btn-to-login">Sign in</a></div>
+</div>
+</div>
 </div>
 
-<!-- FORGOT PASSWORD -->
 <div id="page-forgot" class="page">
-  <div class="auth-page">
-    <div class="auth-card">
-      <div class="auth-logo">CF</div>
-      <h2 class="auth-title">Reset Password</h2>
-      <p class="auth-sub">Enter your email and we'll send a reset link</p>
-      <div id="forgot-error" class="error-msg"></div>
-      <div id="forgot-success" class="success-msg"></div>
-      <div class="input-group">
-        <label class="input-label">Email</label>
-        <input type="email" id="forgot-email" class="input" placeholder="name@example.com">
-      </div>
-      <button class="btn-full" onclick="handleForgot()">Send Reset Link</button>
-      <div class="auth-link"><a onclick="showPage('page-login')">← Back to sign in</a></div>
-    </div>
-  </div>
+<div class="auth-page">
+<div class="auth-card">
+<div class="auth-logo">CF</div>
+<h2 class="auth-title">Reset Password</h2>
+<p class="auth-sub">Enter your email and we will send a reset link</p>
+<div id="forgot-error" class="error-msg"></div>
+<div id="forgot-success" class="success-msg"></div>
+<div class="input-group"><label class="input-label">Email</label><input type="email" id="forgot-email" class="input" placeholder="name@example.com"></div>
+<button class="btn-full" id="forgot-btn">Send Reset Link</button>
+<div class="auth-link"><a id="btn-forgot-to-login">← Back to sign in</a></div>
+</div>
+</div>
 </div>
 
-<!-- DASHBOARD -->
- <div id="page-dashboard" class="page">
-  <nav class="dash-nav">
-    <div class="nav-logo">
-      <div class="nav-logo-icon">CF</div>
-      ClearCFO
-    </div>
-    <div class="nav-right">
-      <span class="user-email" id="nav-email"></span>
-      <span class="plan-badge" id="nav-plan">FREE</span>
-      <button class="btn-logout" onclick="handleLogout()">Logout</button>
-    </div>
-  </nav>
-  <div class="dash-content">
-    <h1 class="dash-title" id="dash-greeting">Welcome 👋</h1>
-    <p class="dash-sub">Select a tool to start saving money</p>
-    <div id="upgrade-banner" class="upgrade-banner" style="display:none">
-      <span>⚡ Upgrade to Pro to unlock all features</span>
-      <button class="btn-primary" style="padding:.5rem 1rem;font-size:.85rem" onclick="window.open('https://radhiayt.gumroad.com/l/kcbbjx','_blank')">Upgrade Now →</button>
-    </div>
-    <div class="tools-grid">
-      <div class="tool-card" style="--accent:#10b981" onclick="showPage('page-chargebacks')">
-        <div class="tool-icon">⚡</div>
-        <div class="tool-name">Chargeback Autopilot</div>
-        <div class="tool-desc">AI generates professional dispute letters and increases win rate by 80%</div>
-        <div class="tool-arrow">Start now →</div>
-      </div>
-      <div class="tool-card" style="--accent:#3b82f6" onclick="showPage('page-spend')">
-        <div class="tool-icon">💸</div>
-        <div class="tool-name">Spend Intelligence</div>
-        <div class="tool-desc">Analyze expenses and detect wasted subscriptions and hidden fees</div>
-        <div class="tool-arrow">Start now →</div>
-      </div>
-      <div class="tool-card" style="--accent:#f59e0b" onclick="showPage('page-contracts')">
-        <div class="tool-icon">📄</div>
-        <div class="tool-name">Contract AI</div>
-        <div class="tool-desc">Analyze contracts and detect risky clauses before it's too late</div>
-        <div class="tool-arrow">Start now →</div>
-      </div>
-      <div class="tool-card" style="--accent:#8b5cf6" onclick="showPage('page-invoice')">
-        <div class="tool-icon">🧾</div>
-        <div class="tool-name">Invoice Analyzer</div>
-        <div class="tool-desc">Automatically detect errors and overcharges in your invoices</div>
-        <div class="tool-arrow">Start now →</div>
-      </div>
-      <div class="tool-card" style="--accent:#06b6d4" onclick="showPage('page-cashflow')">
-        <div class="tool-icon">📊</div>
-        <div class="tool-name">Cash Flow Predictor</div>
-        <div class="tool-desc">Predict cash flow for the next 3 months and avoid problems</div>
-        <div class="tool-arrow">Start now →</div>
-      </div>
-      <div class="tool-card" style="--accent:#ec4899" onclick="showPage('page-advisor')">
-        <div class="tool-icon">🤖</div>
-        <div class="tool-name">AI CFO Advisor</div>
-        <div class="tool-desc">Get personalized financial advice from your AI CFO 24/7</div>
-        <div class="tool-arrow">Start now →</div>
-      </div>
-    </div>
-  </div>
+<div id="page-dashboard" class="page">
+<nav class="dash-nav">
+<div class="nav-logo"><div class="nav-logo-icon">CF</div>ClearCFO</div>
+<div class="nav-right">
+<span class="user-email" id="nav-email"></span>
+<span class="plan-badge">FREE</span>
+<button class="btn-logout" id="logout-btn">Logout</button>
+</div>
+</nav>
+<div class="dash-content">
+<h1 class="dash-title" id="dash-greeting">Welcome 👋</h1>
+<p class="dash-sub">Select a tool to start saving money</p>
+<div class="upgrade-banner">
+<span>⚡ Upgrade to Pro to unlock all features</span>
+<button class="btn-primary" style="padding:.5rem 1rem;font-size:.85rem" id="btn-upgrade">Upgrade Now →</button>
+</div>
+<div class="tools-grid">
+<div class="tool-card" style="--accent:#10b981" id="tool-chargebacks"><div class="tool-icon">⚡</div><div class="tool-name">Chargeback Autopilot</div><div class="tool-desc">AI generates professional dispute letters and increases win rate by 80%</div><div class="tool-arrow">Start now →</div></div>
+<div class="tool-card" style="--accent:#3b82f6" id="tool-spend"><div class="tool-icon">💸</div><div class="tool-name">Spend Intelligence</div><div class="tool-desc">Analyze expenses and detect wasted subscriptions and hidden fees</div><div class="tool-arrow">Start now →</div></div>
+<div class="tool-card" style="--accent:#f59e0b" id="tool-contracts"><div class="tool-icon">📄</div><div class="tool-name">Contract AI</div><div class="tool-desc">Analyze contracts and detect risky clauses before it is too late</div><div class="tool-arrow">Start now →</div></div>
+<div class="tool-card" style="--accent:#8b5cf6" id="tool-invoice"><div class="tool-icon">🧾</div><div class="tool-name">Invoice Analyzer</div><div class="tool-desc">Automatically detect errors and overcharges in your invoices</div><div class="tool-arrow">Start now →</div></div>
+<div class="tool-card" style="--accent:#06b6d4" id="tool-cashflow"><div class="tool-icon">📊</div><div class="tool-name">Cash Flow Predictor</div><div class="tool-desc">Predict cash flow for the next 3 months and avoid problems</div><div class="tool-arrow">Start now →</div></div>
+<div class="tool-card" style="--accent:#ec4899" id="tool-advisor"><div class="tool-icon">🤖</div><div class="tool-name">AI CFO Advisor</div><div class="tool-desc">Get personalized financial advice from your AI CFO 24/7</div><div class="tool-arrow">Start now →</div></div>
+</div>
+</div>
 </div>
 
-<!-- CHARGEBACKS -->
 <div id="page-chargebacks" class="page">
-  <div class="feat-header">
-    <button class="btn-back" onclick="showPage('page-dashboard')">← Back</button>
-    <span class="feat-title">⚡ Chargeback Autopilot</span>
-  </div>
-  <div class="feat-content">
-    <div class="stats-row">
-      <div class="stat-card"><div class="stat-value" id="cb-total">0</div><div class="stat-label">Total</div></div>
-      <div class="stat-card"><div class="stat-value" style="color:var(--green)" id="cb-won">0</div><div class="stat-label">Submitted</div></div>
-      <div class="stat-card"><div class="stat-value" style="color:var(--yellow)" id="cb-pending">0</div><div class="stat-label">Pending</div></div>
-    </div>
-    <div class="card">
-      <div class="card-title">+ New Chargeback</div>
-      <div class="form-row">
-        <div class="form-group"><label class="form-label">Customer Name</label><input type="text" id="cb-customer" class="input" placeholder="John Smith"></div>
-        <div class="form-group"><label class="form-label">Amount ($)</label><input type="number" id="cb-amount" class="input" placeholder="99.99"></div>
-      </div>
-      <div class="form-row">
-        <div class="form-group"><label class="form-label">Transaction Date</label><input type="date" id="cb-date" class="input"></div>
-        <div class="form-group"><label class="form-label">Tracking Number (optional)</label><input type="text" id="cb-tracking" class="input" placeholder="TRK123456"></div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Chargeback Reason</label>
-        <select id="cb-reason" class="input">
-          <option value="item_not_received">Item Not Received</option>
-          <option value="not_as_described">Not As Described</option>
-          <option value="unauthorized">Unauthorized Transaction</option>
-          <option value="duplicate">Duplicate Charge</option>
-          <option value="credit_not_processed">Credit Not Processed</option>
-        </select>
-      </div>
-      <div class="form-group"><label class="form-label">Product/Service Description</label><textarea id="cb-description" class="input" placeholder="Describe the product or service in detail..."></textarea></div>
-      <button class="btn-ai" id="cb-btn" onclick="generateChargeback()">🤖 Generate AI Dispute Letter</button>
-    </div>
-    <div id="cb-result" style="display:none" class="result-card">
-      <div class="result-title">✅ Ready-to-Submit Dispute Letter</div>
-      <div class="result-text" id="cb-result-text"></div>
-      <button class="btn-copy" onclick="copyText('cb-result-text')">📋 Copy Letter</button>
-    </div>
-    <div id="cb-list" style="margin-top:1.5rem"></div>
-  </div>
+<div class="feat-header"><button class="btn-back" id="cb-back">← Back</button><span class="feat-title">⚡ Chargeback Autopilot</span></div>
+<div class="feat-content">
+<div class="stats-row">
+<div class="stat-card"><div class="stat-value" id="cb-total">0</div><div class="stat-label">Total</div></div>
+<div class="stat-card"><div class="stat-value" style="color:var(--green)" id="cb-won">0</div><div class="stat-label">Submitted</div></div>
+<div class="stat-card"><div class="stat-value" style="color:var(--yellow)" id="cb-pending">0</div><div class="stat-label">Pending</div></div>
+</div>
+<div class="card">
+<div class="card-title">+ New Chargeback</div>
+<div class="form-row">
+<div class="form-group"><label class="form-label">Customer Name</label><input type="text" id="cb-customer" class="input" placeholder="John Smith"></div>
+<div class="form-group"><label class="form-label">Amount ($)</label><input type="number" id="cb-amount" class="input" placeholder="99.99"></div>
+</div>
+<div class="form-row">
+<div class="form-group"><label class="form-label">Transaction Date</label><input type="date" id="cb-date" class="input"></div>
+<div class="form-group"><label class="form-label">Tracking Number</label><input type="text" id="cb-tracking" class="input" placeholder="TRK123456"></div>
+</div>
+<div class="form-group"><label class="form-label">Reason</label><select id="cb-reason" class="input"><option value="item_not_received">Item Not Received</option><option value="not_as_described">Not As Described</option><option value="unauthorized">Unauthorized Transaction</option><option value="duplicate">Duplicate Charge</option></select></div>
+<div class="form-group"><label class="form-label">Product Description</label><textarea id="cb-description" class="input" placeholder="Describe the product or service..."></textarea></div>
+<button class="btn-ai" id="cb-btn">🤖 Generate AI Dispute Letter</button>
+</div>
+<div id="cb-result" style="display:none" class="result-card">
+<div class="result-title">✅ Ready-to-Submit Dispute Letter</div>
+<div class="result-text" id="cb-result-text"></div>
+<button class="btn-copy" id="cb-copy">📋 Copy Letter</button>
+</div>
+<div id="cb-list" style="margin-top:1.5rem"></div>
+</div>
 </div>
 
-<!-- SPEND -->
 <div id="page-spend" class="page">
-  <div class="feat-header">
-    <button class="btn-back" onclick="showPage('page-dashboard')">← Back</button>
-    <span class="feat-title">💸 Spend Intelligence</span>
-  </div>
-  <div class="feat-content">
-    <div class="card">
-      <div class="card-title">Paste your bank statement or expense list</div>
-      <textarea id="spend-text" class="input" rows="8" placeholder="Example:&#10;2024-01-01 Netflix 15.99&#10;2024-01-03 Spotify 9.99&#10;2024-01-05 AWS 120.00&#10;2024-01-07 Adobe 54.99&#10;2024-01-10 Zoom 14.99"></textarea>
-      <button class="btn-ai" id="spend-btn" onclick="analyzeSpend()" style="margin-top:1rem">🔍 Analyze Expenses with AI</button>
-    </div>
-    <div id="spend-result" style="display:none">
-      <div class="big-number">
-        <div class="amount" id="spend-waste">$0</div>
-        <div class="label">Monthly waste detected</div>
-        <div class="savings" id="spend-savings"></div>
-      </div>
-      <div class="card"><div class="card-title">📋 Detected Subscriptions</div><div id="spend-subs"></div></div>
-      <div class="card" id="spend-fees-card" style="display:none"><div class="card-title" style="color:var(--red)">⚠️ Hidden Fees</div><div id="spend-fees"></div></div>
-    </div>
-  </div>
+<div class="feat-header"><button class="btn-back" id="spend-back">← Back</button><span class="feat-title">💸 Spend Intelligence</span></div>
+<div class="feat-content">
+<div class="card">
+<div class="card-title">Paste your bank statement</div>
+<textarea id="spend-text" class="input" rows="8" placeholder="Example:&#10;2024-01-01 Netflix 15.99&#10;2024-01-03 Spotify 9.99&#10;2024-01-05 AWS 120.00"></textarea>
+<button class="btn-ai" id="spend-btn" style="margin-top:1rem">🔍 Analyze with AI</button>
+</div>
+<div id="spend-result" style="display:none">
+<div class="big-number"><div class="amount" id="spend-waste">$0</div><div class="label">Monthly waste detected</div><div class="savings" id="spend-savings"></div></div>
+<div class="card"><div class="card-title">📋 Subscriptions</div><div id="spend-subs"></div></div>
+<div class="card" id="spend-fees-card" style="display:none"><div class="card-title" style="color:var(--red)">⚠️ Hidden Fees</div><div id="spend-fees"></div></div>
+</div>
+</div>
 </div>
 
-<!-- CONTRACTS -->
 <div id="page-contracts" class="page">
-  <div class="feat-header">
-    <button class="btn-back" onclick="showPage('page-dashboard')">← Back</button>
-    <span class="feat-title">📄 Contract AI</span>
-  </div>
-  <div class="feat-content">
-    <div class="card">
-      <div class="card-title">Analyze New Contract</div>
-      <div class="form-row">
-        <div class="form-group"><label class="form-label">Vendor Name</label><input type="text" id="con-vendor" class="input" placeholder="Company name"></div>
-        <div class="form-group"><label class="form-label">Monthly Cost ($)</label><input type="number" id="con-cost" class="input" placeholder="500"></div>
-      </div>
-      <div class="form-group"><label class="form-label">Contract Text</label><textarea id="con-text" class="input" rows="8" placeholder="Paste contract text here for analysis..."></textarea></div>
-      <button class="btn-ai" id="con-btn" onclick="analyzeContract()">⚖️ Analyze Contract with AI</button>
-    </div>
-    <div id="con-result" style="display:none" class="card">
-      <div class="risk-gauge"><div class="risk-number" id="con-score">0</div><div class="risk-label">Risk Score out of 10</div></div>
-      <div id="con-renewal-alert" style="display:none" class="alert-banner"></div>
-      <hr class="divider">
-      <div class="card-title">⚠️ Detected Risks</div><div id="con-risks"></div>
-      <hr class="divider">
-      <div class="card-title" style="color:var(--green)">💡 Recommendations</div><div id="con-recommendations"></div>
-    </div>
-    <div id="con-list" style="margin-top:1rem"></div>
-  </div>
+<div class="feat-header"><button class="btn-back" id="con-back">← Back</button><span class="feat-title">📄 Contract AI</span></div>
+<div class="feat-content">
+<div class="card">
+<div class="card-title">Analyze New Contract</div>
+<div class="form-row">
+<div class="form-group"><label class="form-label">Vendor Name</label><input type="text" id="con-vendor" class="input" placeholder="Company name"></div>
+<div class="form-group"><label class="form-label">Monthly Cost ($)</label><input type="number" id="con-cost" class="input" placeholder="500"></div>
+</div>
+<div class="form-group"><label class="form-label">Contract Text</label><textarea id="con-text" class="input" rows="8" placeholder="Paste contract text here..."></textarea></div>
+<button class="btn-ai" id="con-btn">⚖️ Analyze Contract with AI</button>
+</div>
+<div id="con-result" style="display:none" class="card">
+<div class="risk-gauge"><div class="risk-number" id="con-score">0</div><div class="risk-label">Risk Score out of 10</div></div>
+<div id="con-renewal-alert" style="display:none" class="alert-banner"></div>
+<hr class="divider">
+<div class="card-title">⚠️ Risks</div><div id="con-risks"></div>
+<hr class="divider">
+<div class="card-title" style="color:var(--green)">💡 Recommendations</div><div id="con-recommendations"></div>
+</div>
+<div id="con-list" style="margin-top:1rem"></div>
+</div>
 </div>
 
-<!-- INVOICE -->
 <div id="page-invoice" class="page">
-  <div class="feat-header">
-    <button class="btn-back" onclick="showPage('page-dashboard')">← Back</button>
-    <span class="feat-title">🧾 Invoice Analyzer</span>
-  </div>
-  <div class="feat-content">
-    <div class="card">
-      <div class="card-title">Analyze Invoice</div>
-      <div class="form-row">
-        <div class="form-group"><label class="form-label">Vendor Name</label><input type="text" id="inv-vendor" class="input" placeholder="Company name"></div>
-        <div class="form-group"><label class="form-label">Total Amount ($)</label><input type="number" id="inv-amount" class="input" placeholder="1000"></div>
-      </div>
-      <div class="form-group"><label class="form-label">Invoice Details</label><textarea id="inv-text" class="input" rows="7" placeholder="Paste invoice details here...&#10;Example:&#10;- Server hosting: $200&#10;- Unspecified additional fees: $150&#10;- Technical support: $300&#10;- Tax: $50"></textarea></div>
-      <button class="btn-ai" id="inv-btn" onclick="analyzeInvoice()">🔍 Analyze Invoice with AI</button>
-    </div>
-    <div id="inv-result" style="display:none" class="result-card">
-      <div class="result-title">📊 Invoice Analysis Results</div>
-      <div class="result-text" id="inv-result-text"></div>
-      <button class="btn-copy" onclick="copyText('inv-result-text')">📋 Copy Report</button>
-    </div>
-  </div>
+<div class="feat-header"><button class="btn-back" id="inv-back">← Back</button><span class="feat-title">🧾 Invoice Analyzer</span></div>
+<div class="feat-content">
+<div class="card">
+<div class="card-title">Analyze Invoice</div>
+<div class="form-row">
+<div class="form-group"><label class="form-label">Vendor Name</label><input type="text" id="inv-vendor" class="input" placeholder="Company name"></div>
+<div class="form-group"><label class="form-label">Total Amount ($)</label><input type="number" id="inv-amount" class="input" placeholder="1000"></div>
+</div>
+<div class="form-group"><label class="form-label">Invoice Details</label><textarea id="inv-text" class="input" rows="7" placeholder="Paste invoice details here..."></textarea></div>
+<button class="btn-ai" id="inv-btn">🔍 Analyze Invoice with AI</button>
+</div>
+<div id="inv-result" style="display:none" class="result-card">
+<div class="result-title">📊 Invoice Analysis</div>
+<div class="result-text" id="inv-result-text"></div>
+<button class="btn-copy" id="inv-copy">📋 Copy Report</button>
+</div>
+</div>
 </div>
 
-<!-- CASH FLOW -->
 <div id="page-cashflow" class="page">
-  <div class="feat-header">
-    <button class="btn-back" onclick="showPage('page-dashboard')">← Back</button>
-    <span class="feat-title">📊 Cash Flow Predictor</span>
-  </div>
-  <div class="feat-content">
-    <div class="card">
-      <div class="card-title">Enter Your Financial Data</div>
-      <div class="form-row">
-        <div class="form-group"><label class="form-label">Monthly Income ($)</label><input type="number" id="cf-income" class="input" placeholder="5000"></div>
-        <div class="form-group"><label class="form-label">Fixed Expenses ($)</label><input type="number" id="cf-fixed" class="input" placeholder="2000"></div>
-      </div>
-      <div class="form-row">
-        <div class="form-group"><label class="form-label">Variable Expenses ($)</label><input type="number" id="cf-variable" class="input" placeholder="1000"></div>
-        <div class="form-group"><label class="form-label">Monthly Debt ($)</label><input type="number" id="cf-debt" class="input" placeholder="500"></div>
-      </div>
-      <div class="form-group"><label class="form-label">Expected Exceptional Expenses?</label><textarea id="cf-extra" class="input" rows="3" placeholder="Example: Annual contract renewal $1200 in March, equipment maintenance $500..."></textarea></div>
-      <button class="btn-ai" id="cf-btn" onclick="predictCashFlow()">📈 Predict Cash Flow</button>
-    </div>
-    <div id="cf-result" style="display:none" class="result-card">
-      <div class="result-title">📊 3-Month Cash Flow Forecast</div>
-      <div class="result-text" id="cf-result-text"></div>
-    </div>
-  </div>
- </div>
- 
-<!-- AI ADVISOR -->
+<div class="feat-header"><button class="btn-back" id="cf-back">← Back</button><span class="feat-title">📊 Cash Flow Predictor</span></div>
+<div class="feat-content">
+<div class="card">
+<div class="card-title">Enter Financial Data</div>
+<div class="form-row">
+<div class="form-group"><label class="form-label">Monthly Income ($)</label><input type="number" id="cf-income" class="input" placeholder="5000"></div>
+<div class="form-group"><label class="form-label">Fixed Expenses ($)</label><input type="number" id="cf-fixed" class="input" placeholder="2000"></div>
+</div>
+<div class="form-row">
+<div class="form-group"><label class="form-label">Variable Expenses ($)</label><input type="number" id="cf-variable" class="input" placeholder="1000"></div>
+<div class="form-group"><label class="form-label">Monthly Debt ($)</label><input type="number" id="cf-debt" class="input" placeholder="500"></div>
+</div>
+<div class="form-group"><label class="form-label">Exceptional Expenses</label><textarea id="cf-extra" class="input" rows="3" placeholder="Example: Annual renewal $1200 in March..."></textarea></div>
+<button class="btn-ai" id="cf-btn">📈 Predict Cash Flow</button>
+</div>
+<div id="cf-result" style="display:none" class="result-card">
+<div class="result-title">📊 3-Month Forecast</div>
+<div class="result-text" id="cf-result-text"></div>
+</div>
+</div>
+</div>
+
 <div id="page-advisor" class="page">
-  <div class="feat-header">
-    <button class="btn-back" onclick="showPage('page-dashboard')">← Back</button>
-    <span class="feat-title">🤖 AI CFO Advisor</span>
-  </div>
-  <div class="feat-content">
-    <div class="card">
-      <div class="card-title">Ask Your AI Financial Advisor</div>
-      <div id="advisor-chat" style="min-height:200px;margin-bottom:1rem;display:flex;flex-direction:column;gap:.75rem"></div>
-      <div style="display:flex;gap:.5rem">
-        <input type="text" id="advisor-input" class="input" placeholder="Example: How do I reduce expenses? How do I handle a chargeback?" onkeydown="if(event.key==='Enter')sendAdvisor()">
-        <button class="btn-ai" onclick="sendAdvisor()" style="width:auto;padding:.8rem 1.2rem">Send</button>
-      </div>
-    </div>
-  </div>
+<div class="feat-header"><button class="btn-back" id="adv-back">← Back</button><span class="feat-title">🤖 AI CFO Advisor</span></div>
+<div class="feat-content">
+<div class="card">
+<div class="card-title">Ask Your AI Financial Advisor</div>
+<div id="advisor-chat" style="min-height:200px;margin-bottom:1rem;display:flex;flex-direction:column;gap:.75rem"></div>
+<div style="display:flex;gap:.5rem">
+<input type="text" id="advisor-input" class="input" placeholder="How do I reduce expenses?">
+<button class="btn-ai" id="advisor-send" style="width:auto;padding:.8rem 1.2rem">Send</button>
+</div>
+</div>
+</div>
 </div>
 
 <script>
-const WORKER_URL='https://clearcfo-proxy.ghazghazibahaeddin.workers.dev'
-const SB_URL='https://xwrnureztymlijhyfntn.supabase.co'
-const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh3cm51cmV6dHltbGlqaHlmbnRuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ2MzI5MzUsImV4cCI6MjA5MDIwODkzNX0.PckXiWqz4-FPQoZkxqoEM16f3vivvE7qMUgZ9XZoqso'
+var WORKER='https://clearcfo-proxy.ghazghazibahaeddin.workers.dev';
+var SB_URL='https://xwrnureztymlijhyfntn.supabase.co';
+var SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh3cm51cmV6dHltbGlqaHlmbnRuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ2MzI5MzUsImV4cCI6MjA5MDIwODkzNX0.PckXiWqz4-FPQoZkxqoEM16f3vivvE7qMUgZ9XZoqso';
+var currentUser=null;
+var chargebacks=[];
+var contracts=[];
+var advisorHistory=[];
 
-let currentUser=null
-let chargebacks=[]
-let contracts=[]
-let advisorHistory=[]
-
-function showPage(id){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
-  document.getElementById(id).classList.add('active')
-  window.scrollTo(0,0)
-}
-
-async function callGroq(prompt,systemPrompt=''){
-  const messages=[]
-  if(systemPrompt)messages.push({role:'system',content:systemPrompt})
-  messages.push({role:'user',content:prompt})
-  const res=await fetch(WORKER_URL,{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({model:'llama3-70b-8192',messages,max_tokens:1500,temperature:0.7})
-  })
-  const data=await res.json()
-  if(!data.choices)throw new Error('API error')
-  return data.choices[0].message.content
+function go(id){
+  var pages=document.querySelectorAll('.page');
+  for(var i=0;i<pages.length;i++){pages[i].style.display='none';}
+  var t=document.getElementById(id);
+  if(t){t.style.display='block';window.scrollTo(0,0);}
 }
 
 function showMsg(id,msg){
-  const el=document.getElementById(id)
-  if(!el)return
-  el.textContent=msg
-  el.style.display='block'
-  setTimeout(()=>{el.style.display='none'},5000)
-}
-
-function setLoading(btnId,loading,text,loadText){
-  const btn=document.getElementById(btnId)
-  if(!btn)return
-  btn.disabled=loading
-  btn.innerHTML=loading?`<span class="loading">⟳</span> ${loadText}`:text
+  var el=document.getElementById(id);
+  if(!el)return;
+  el.textContent=msg;
+  el.style.display='block';
+  setTimeout(function(){el.style.display='none';},5000);
 }
 
 function copyText(id){
-  navigator.clipboard.writeText(document.getElementById(id).textContent)
-    .then(()=>alert('✅ Copied!'))
+  var t=document.getElementById(id);
+  if(!t)return;
+  navigator.clipboard.writeText(t.textContent).then(function(){alert('Copied!');});
 }
 
-async function handleSignup(){
-  const name=document.getElementById('signup-name').value.trim()
-  const email=document.getElementById('signup-email').value.trim()
-  const password=document.getElementById('signup-password').value
-  if(!name||!email||!password){showMsg('signup-error','Please fill all fields');return}
-  if(password.length<8){showMsg('signup-error','Password must be at least 8 characters');return}
-  const btn=document.getElementById('signup-btn')
-  btn.disabled=true;btn.textContent='Creating account...'
+async function callAI(prompt,sys){
+  var msgs=[];
+  if(sys)msgs.push({role:'system',content:sys});
+  msgs.push({role:'user',content:prompt});
+  var r=await fetch(WORKER,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'llama3-70b-8192',messages:msgs,max_tokens:1500})});
+  var d=await r.json();
+  return d.choices[0].message.content;
+}
+
+document.getElementById('btn-start').addEventListener('click',function(){go('page-signup');});
+document.getElementById('btn-signin').addEventListener('click',function(){go('page-login');});
+document.getElementById('btn-to-signup').addEventListener('click',function(){go('page-signup');});
+document.getElementById('btn-to-login').addEventListener('click',function(){go('page-login');});
+document.getElementById('btn-to-landing').addEventListener('click',function(){go('page-landing');});
+document.getElementById('btn-forgot').addEventListener('click',function(){go('page-forgot');});
+document.getElementById('btn-forgot-to-login').addEventListener('click',function(){go('page-login');});
+document.getElementById('logout-btn').addEventListener('click',function(){currentUser=null;localStorage.removeItem('cfo');go('page-login');});
+document.getElementById('btn-upgrade').addEventListener('click',function(){window.open('https://radhiayt.gumroad.com/l/kcbbjx','_blank');});
+document.getElementById('btn-starter').addEventListener('click',function(){window.open('https://radhiayt.gumroad.com/l/fvrae','_blank');});
+document.getElementById('btn-pro').addEventListener('click',function(){window.open('https://radhiayt.gumroad.com/l/kcbbjx','_blank');});
+document.getElementById('btn-enterprise').addEventListener('click',function(){window.open('https://radhiayt.gumroad.com/l/pevgar','_blank');});
+document.getElementById('tool-chargebacks').addEventListener('click',function(){go('page-chargebacks');});
+document.getElementById('tool-spend').addEventListener('click',function(){go('page-spend');});
+document.getElementById('tool-contracts').addEventListener('click',function(){go('page-contracts');});
+document.getElementById('tool-invoice').addEventListener('click',function(){go('page-invoice');});
+document.getElementById('tool-cashflow').addEventListener('click',function(){go('page-cashflow');});
+document.getElementById('tool-advisor').addEventListener('click',function(){go('page-advisor');});
+document.getElementById('cb-back').addEventListener('click',function(){go('page-dashboard');});
+document.getElementById('spend-back').addEventListener('click',function(){go('page-dashboard');});
+document.getElementById('con-back').addEventListener('click',function(){go('page-dashboard');});
+document.getElementById('inv-back').addEventListener('click',function(){go('page-dashboard');});
+document.getElementById('cf-back').addEventListener('click',function(){go('page-dashboard');});
+document.getElementById('adv-back').addEventListener('click',function(){go('page-dashboard');});
+document.getElementById('cb-copy').addEventListener('click',function(){copyText('cb-result-text');});
+document.getElementById('inv-copy').addEventListener('click',function(){copyText('inv-result-text');});
+
+document.getElementById('login-btn').addEventListener('click',async function(){
+  var email=document.getElementById('login-email').value.trim();
+  var pass=document.getElementById('login-password').value;
+  if(!email||!pass){showMsg('login-error','Please enter email and password');return;}
+  this.disabled=true;this.textContent='Signing in...';
   try{
-    const res=await fetch(`${SB_URL}/auth/v1/signup`,{
-      method:'POST',
-      headers:{'apikey':SB_KEY,'Content-Type':'application/json'},
-      body:JSON.stringify({email,password,data:{full_name:name}})
-    })
-    const data=await res.json()
-    if(data.error){showMsg('signup-error',data.error.message||'Signup error');return}
-    if(data.access_token){
-      loginUser(data,name,email)
+    var r=await fetch(SB_URL+'/auth/v1/token?grant_type=password',{method:'POST',headers:{'apikey':SB_KEY,'Content-Type':'application/json'},body:JSON.stringify({email:email,password:pass})});
+    var d=await r.json();
+    if(d.error||d.error_description){showMsg('login-error','Invalid email or password');return;}
+    currentUser={token:d.access_token,email:email,name:d.user&&d.user.user_metadata&&d.user.user_metadata.full_name||email};
+    localStorage.setItem('cfo',JSON.stringify(currentUser));
+    document.getElementById('nav-email').textContent=email;
+    document.getElementById('dash-greeting').textContent='Welcome back, '+currentUser.name+' 👋';
+    go('page-dashboard');
+  }catch(e){showMsg('login-error','Connection error');}
+  finally{this.disabled=false;this.textContent='Sign In';}
+});
+
+document.getElementById('signup-btn').addEventListener('click',async function(){
+  var name=document.getElementById('signup-name').value.trim();
+  var email=document.getElementById('signup-email').value.trim();
+  var pass=document.getElementById('signup-password').value;
+  if(!name||!email||!pass){showMsg('signup-error','Please fill all fields');return;}
+  if(pass.length<8){showMsg('signup-error','Password must be at least 8 characters');return;}
+  this.disabled=true;this.textContent='Creating account...';
+  try{
+    var r=await fetch(SB_URL+'/auth/v1/signup',{method:'POST',headers:{'apikey':SB_KEY,'Content-Type':'application/json'},body:JSON.stringify({email:email,password:pass,data:{full_name:name}})});
+    var d=await r.json();
+    if(d.error){showMsg('signup-error',d.error.message||'Signup error');return;}
+    if(d.access_token){
+      currentUser={token:d.access_token,email:email,name:name};
+      localStorage.setItem('cfo',JSON.stringify(currentUser));
+      document.getElementById('nav-email').textContent=email;
+      document.getElementById('dash-greeting').textContent='Welcome, '+name+' 👋';
+      go('page-dashboard');
     }else{
-      showMsg('signup-success','✅ Account created! Check your email to confirm')
+      showMsg('signup-success','Account created! Check your email to confirm.');
     }
-  }catch(e){showMsg('signup-error','Connection error, please try again')}
-  finally{btn.disabled=false;btn.textContent='Create Free Account'}
-}
+  }catch(e){showMsg('signup-error','Connection error');}
+  finally{this.disabled=false;this.textContent='Create Free Account';}
+});
 
-async function handleLogin(){
-  const email=document.getElementById('login-email').value.trim()
-  const password=document.getElementById('login-password').value
-  if(!email||!password){showMsg('login-error','Please enter email and password');return}
-  const btn=document.getElementById('login-btn')
-  btn.disabled=true;btn.textContent='Signing in...'
+document.getElementById('forgot-btn').addEventListener('click',async function(){
+  var email=document.getElementById('forgot-email').value.trim();
+  if(!email){showMsg('forgot-error','Please enter your email');return;}
   try{
-    const res=await fetch(`${SB_URL}/auth/v1/token?grant_type=password`,{
-      method:'POST',
-      headers:{'apikey':SB_KEY,'Content-Type':'application/json'},
-      body:JSON.stringify({email,password})
-    })
-    const data=await res.json()
-    if(data.error||data.error_description){showMsg('login-error','Invalid email or password');return}
-    loginUser(data,data.user?.user_metadata?.full_name||email,email)
-  }catch(e){showMsg('login-error','Connection error, please try again')}
-  finally{btn.disabled=false;btn.textContent='Sign In'}
-}
+    await fetch(SB_URL+'/auth/v1/recover',{method:'POST',headers:{'apikey':SB_KEY,'Content-Type':'application/json'},body:JSON.stringify({email:email})});
+    showMsg('forgot-success','Reset link sent! Check your email.');
+  }catch(e){showMsg('forgot-error','Error sending reset link');}
+});
 
-async function handleForgot(){
-  const email=document.getElementById('forgot-email').value.trim()
-  if(!email){showMsg('forgot-error','Please enter your email');return}
+document.getElementById('cb-btn').addEventListener('click',async function(){
+  var customer=document.getElementById('cb-customer').value.trim();
+  var amount=document.getElementById('cb-amount').value;
+  var date=document.getElementById('cb-date').value;
+  var reason=document.getElementById('cb-reason').value;
+  var desc=document.getElementById('cb-description').value.trim();
+  var tracking=document.getElementById('cb-tracking').value.trim();
+  if(!customer||!amount||!desc){alert('Please fill customer name, amount and description');return;}
+  this.disabled=true;this.textContent='Generating...';
   try{
-    await fetch(`${SB_URL}/auth/v1/recover`,{
-      method:'POST',
-      headers:{'apikey':SB_KEY,'Content-Type':'application/json'},
-      body:JSON.stringify({email})
-    })
-    showMsg('forgot-success','✅ Reset link sent! Check your email')
-  }catch(e){showMsg('forgot-error','Send error')}
-}
- 
-<!-- AI ADVISOR -->
-<div id="page-advisor" class="page">
-  <div class="feat-header">
-    <button class="btn-back" onclick="showPage('page-dashboard')">← Back</button>
-    <span class="feat-title">🤖 AI CFO Advisor</span>
-  </div>
-  <div class="feat-content">
-    <div class="card">
-      <div class="card-title">Ask Your AI Financial Advisor</div>
-      <div id="advisor-chat" style="min-height:200px;margin-bottom:1rem;display:flex;flex-direction:column;gap:.75rem"></div>
-      <div style="display:flex;gap:.5rem">
-        <input type="text" id="advisor-input" class="input" placeholder="Example: How do I reduce expenses? How do I handle a chargeback?" onkeydown="if(event.key==='Enter')sendAdvisor()">
-        <button class="btn-ai" onclick="sendAdvisor()" style="width:auto;padding:.8rem 1.2rem">Send</button>
-      </div>
-    </div>
-  </div>
-</div>
+    var prompt='Write a professional chargeback dispute letter.\nCustomer: '+customer+'\nAmount: $'+amount+'\nDate: '+date+'\nReason: '+reason+'\nProduct: '+desc+'\nTracking: '+(tracking||'None')+'\n\nWrite a complete dispute letter to maximize winning chances.';
+    var response=await callAI(prompt);
+    document.getElementById('cb-result-text').textContent=response;
+    document.getElementById('cb-result').style.display='block';
+    chargebacks.push({customer:customer,amount:amount,date:date,status:'pending'});
+    document.getElementById('cb-total').textContent=chargebacks.length;
+    document.getElementById('cb-pending').textContent=chargebacks.filter(function(c){return c.status==='pending';}).length;
+  }catch(e){alert('AI error. Please try again.');}
+  finally{this.disabled=false;this.textContent='🤖 Generate AI Dispute Letter';}
+});
 
-<script>
-alert('JS loaded!')
-const WORKER_URL='https://clearcfo-proxy.ghazghazibahaeddin.workers.dev'
-const SB_URL='https://xwrnureztymlijhyfntn.supabase.co'
-const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh3cm51cmV6dHltbGlqaHlmbnRuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ2MzI5MzUsImV4cCI6MjA5MDIwODkzNX0.PckXiWqz4-FPQoZkxqoEM16f3vivvE7qMUgZ9XZoqso'
-
-let currentUser=null
-let chargebacks=[]
-let contracts=[]
-let advisorHistory=[]
-
-function showPage(id){
-  document.querySelectorAll('.page').forEach(p=>{
-    p.style.display='none'
-  })
-  const target=document.getElementById(id)
-  if(target){
-    target.style.display='block'
-    window.scrollTo(0,0)
-  }
-  }
-
-async function callGroq(prompt,systemPrompt=''){
-  const messages=[]
-  if(systemPrompt)messages.push({role:'system',content:systemPrompt})
-  messages.push({role:'user',content:prompt})
-  const res=await fetch(WORKER_URL,{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({model:'llama3-70b-8192',messages,max_tokens:1500,temperature:0.7})
-  })
-  const data=await res.json()
-  if(!data.choices)throw new Error('API error')
-  return data.choices[0].message.content
-}
-
-function showMsg(id,msg){
-  const el=document.getElementById(id)
-  if(!el)return
-  el.textContent=msg
-  el.style.display='block'
-  setTimeout(()=>{el.style.display='none'},5000)
-}
-
-function setLoading(btnId,loading,text,loadText){
-  const btn=document.getElementById(btnId)
-  if(!btn)return
-  btn.disabled=loading
-  btn.innerHTML=loading?`<span class="loading">⟳</span> ${loadText}`:text
-}
-
-function copyText(id){
-  navigator.clipboard.writeText(document.getElementById(id).textContent)
-    .then(()=>alert('✅ Copied!'))
-}
-
-async function handleSignup(){
-  const name=document.getElementById('signup-name').value.trim()
-  const email=document.getElementById('signup-email').value.trim()
-  const password=document.getElementById('signup-password').value
-  if(!name||!email||!password){showMsg('signup-error','Please fill all fields');return}
-  if(password.length<8){showMsg('signup-error','Password must be at least 8 characters');return}
-  const btn=document.getElementById('signup-btn')
-  btn.disabled=true;btn.textContent='Creating account...'
+document.getElementById('spend-btn').addEventListener('click',async function(){
+  var text=document.getElementById('spend-text').value.trim();
+  if(!text){alert('Please enter expense data');return;}
+  this.disabled=true;this.textContent='Analyzing...';
   try{
-    const res=await fetch(`${SB_URL}/auth/v1/signup`,{
-      method:'POST',
-      headers:{'apikey':SB_KEY,'Content-Type':'application/json'},
-      body:JSON.stringify({email,password,data:{full_name:name}})
-    })
-    const data=await res.json()
-    if(data.error){showMsg('signup-error',data.error.message||'Signup error');return}
-    if(data.access_token){
-      loginUser(data,name,email)
-    }else{
-      showMsg('signup-success','✅ Account created! Check your email to confirm')
+    var prompt='Analyze these transactions and return ONLY valid JSON:\n'+text+'\n\nReturn exactly:\n{"subscriptions":[{"name":"Netflix","amount":15.99,"frequency":"monthly","recommendation":"cancel"}],"hidden_fees":[{"description":"fee","amount":10}],"total_waste":100,"savings_potential":1200}\n\nrecommendation must be cancel or keep only.';
+    var response=await callAI(prompt);
+    var clean=response.replace(/```json|```/g,'').trim();
+    var data=JSON.parse(clean);
+    document.getElementById('spend-waste').textContent='$'+data.total_waste;
+    document.getElementById('spend-savings').textContent='Save up to $'+data.savings_potential+'/year';
+    var subsHtml='';
+    for(var i=0;i<data.subscriptions.length;i++){
+      var s=data.subscriptions[i];
+      subsHtml+='<div class="list-item"><div class="list-item-left"><h4>'+s.name+'</h4><p>'+s.frequency+'</p></div><div style="display:flex;align-items:center;gap:.75rem"><span style="font-weight:700">$'+s.amount+'</span><span class="badge '+(s.recommendation==='cancel'?'badge-red':'badge-green')+'">'+(s.recommendation==='cancel'?'Cancel':'Keep')+'</span></div></div>';
     }
-  }catch(e){showMsg('signup-error','Connection error, please try again')}
-  finally{btn.disabled=false;btn.textContent='Create Free Account'}
-}
-
-async function handleLogin(){
-  const email=document.getElementById('login-email').value.trim()
-  const password=document.getElementById('login-password').value
-  if(!email||!password){showMsg('login-error','Please enter email and password');return}
-  const btn=document.getElementById('login-btn')
-  btn.disabled=true;btn.textContent='Signing in...'
-  try{
-    const res=await fetch(`${SB_URL}/auth/v1/token?grant_type=password`,{
-      method:'POST',
-      headers:{'apikey':SB_KEY,'Content-Type':'application/json'},
-      body:JSON.stringify({email,password})
-    })
-    const data=await res.json()
-    if(data.error||data.error_description){showMsg('login-error','Invalid email or password');return}
-    loginUser(data,data.user?.user_metadata?.full_name||email,email)
-  }catch(e){showMsg('login-error','Connection error, please try again')}
-  finally{btn.disabled=false;btn.textContent='Sign In'}
-}
-
-async function handleForgot(){
-  const email=document.getElementById('forgot-email').value.trim()
-  if(!email){showMsg('forgot-error','Please enter your email');return}
-  try{
-    await fetch(`${SB_URL}/auth/v1/recover`,{
-      method:'POST',
-      headers:{'apikey':SB_KEY,'Content-Type':'application/json'},
-      body:JSON.stringify({email})
-    })
-    showMsg('forgot-success','✅ Reset link sent! Check your email')
-  }catch(e){showMsg('forgot-error','Send error')}
- }
- function loginUser(data,name,email){
-  currentUser={token:data.access_token,name:name||email,email}
-  localStorage.setItem('clearcfo_user',JSON.stringify(currentUser))
-  document.getElementById('nav-email').textContent=email
-  document.getElementById('dash-greeting').textContent=`Welcome back, ${name||email} 👋`
-  document.getElementById('upgrade-banner').style.display='flex'
-  showPage('page-dashboard')
-}
-
-function handleLogout(){
-  currentUser=null
-  localStorage.removeItem('clearcfo_user')
-  showPage('page-login')
-}
-
-function checkSession(){
-  const saved=localStorage.getItem('clearcfo_user')
-  if(saved){
-    try{
-      currentUser=JSON.parse(saved)
-      document.getElementById('nav-email').textContent=currentUser.email
-      document.getElementById('dash-greeting').textContent=`Welcome back, ${currentUser.name} 👋`
-      document.getElementById('upgrade-banner').style.display='flex'
-    }catch(e){}
-  }
-}
-
-async function generateChargeback(){
-  const customer=document.getElementById('cb-customer').value.trim()
-  const amount=document.getElementById('cb-amount').value
-  const date=document.getElementById('cb-date').value
-  const reason=document.getElementById('cb-reason').value
-  const description=document.getElementById('cb-description').value.trim()
-  const tracking=document.getElementById('cb-tracking').value.trim()
-  if(!customer||!amount||!description){alert('Please fill customer name, amount and description');return}
-  setLoading('cb-btn',true,'🤖 Generate AI Dispute Letter','Generating...')
-  try{
-    const prompt=`You are an expert chargeback dispute specialist. Write a professional, compelling dispute response letter that maximizes the chance of winning.
-
-Dispute Details:
-- Customer: ${customer}
-- Amount: $${amount}
-- Date: ${date}
-- Reason: ${reason}
-- Product/Service: ${description}
-- Tracking: ${tracking||'Not available'}
-
-Write a complete, professional dispute letter including:
-1. Clear introduction
-2. Detailed transaction explanation
-3. Evidence summary
-4. Request to reverse the chargeback
-5. Professional closing
-
-Make it compelling and legally sound.`
-    const response=await callGroq(prompt)
-    document.getElementById('cb-result-text').textContent=response
-    document.getElementById('cb-result').style.display='block'
-    chargebacks.push({customer,amount,date,reason,status:'pending',response})
-    updateCBStats()
-    renderCBList()
-  }catch(e){alert('AI connection error. Please try again.')}
-  finally{setLoading('cb-btn',false,'🤖 Generate AI Dispute Letter','')}
-}
-
-function updateCBStats(){
-  document.getElementById('cb-total').textContent=chargebacks.length
-  document.getElementById('cb-won').textContent=chargebacks.filter(c=>c.status==='submitted').length
-  document.getElementById('cb-pending').textContent=chargebacks.filter(c=>c.status==='pending').length
-}
-
-function renderCBList(){
-  const el=document.getElementById('cb-list')
-  if(!chargebacks.length){el.innerHTML='';return}
-  el.innerHTML=`<div class="card"><div class="card-title">History</div>${chargebacks.map(c=>`
-    <div class="list-item">
-      <div class="list-item-left"><h4>${c.customer}</h4><p>${c.date||'No date'} · ${c.reason}</p></div>
-      <div style="display:flex;align-items:center;gap:.75rem">
-        <span style="color:var(--green);font-weight:700">$${c.amount}</span>
-        <span class="badge badge-yellow">${c.status}</span>
-      </div>
-    </div>`).join('')}</div>`
-}
-
-async function analyzeSpend(){
-  const text=document.getElementById('spend-text').value.trim()
-  if(!text){alert('Please enter expense data');return}
-  setLoading('spend-btn',true,'🔍 Analyze Expenses with AI','Analyzing...')
-  try{
-    const prompt=`Analyze these bank transactions and return ONLY valid JSON, no markdown, no explanation:
-${text}
-
-Return exactly this format:
-{"subscriptions":[{"name":"Netflix","amount":15.99,"frequency":"monthly","recommendation":"cancel"}],"hidden_fees":[{"description":"Unspecified fee","amount":50}],"total_waste":150,"savings_potential":1800}
-
-recommendation must be "cancel" or "keep" only.`
-    const response=await callGroq(prompt)
-    const clean=response.replace(/```json|```/g,'').trim()
-    const data=JSON.parse(clean)
-    document.getElementById('spend-waste').textContent=`$${data.total_waste}`
-    document.getElementById('spend-savings').textContent=`💰 Save up to $${data.savings_potential}/year`
-    document.getElementById('spend-subs').innerHTML=data.subscriptions.map(s=>`
-      <div class="list-item">
-        <div class="list-item-left"><h4>${s.name}</h4><p>${s.frequency}</p></div>
-        <div style="display:flex;align-items:center;gap:.75rem">
-          <span style="font-weight:700">$${s.amount}</span>
-          <span class="badge ${s.recommendation==='cancel'?'badge-red':'badge-green'}">${s.recommendation==='cancel'?'❌ Cancel':'✅ Keep'}</span>
-        </div>
-      </div>`).join('')
+    document.getElementById('spend-subs').innerHTML=subsHtml;
     if(data.hidden_fees&&data.hidden_fees.length>0){
-      document.getElementById('spend-fees-card').style.display='block'
-      document.getElementById('spend-fees').innerHTML=data.hidden_fees.map(f=>`
-        <div class="list-item">
-          <div class="list-item-left"><h4>${f.description}</h4></div>
-          <span style="color:var(--red);font-weight:700">$${f.amount}</span>
-        </div>`).join('')
+      document.getElementById('spend-fees-card').style.display='block';
+      var feesHtml='';
+      for(var j=0;j<data.hidden_fees.length;j++){
+        var f=data.hidden_fees[j];
+        feesHtml+='<div class="list-item"><div class="list-item-left"><h4>'+f.description+'</h4></div><span style="color:var(--red);font-weight:700">$'+f.amount+'</span></div>';
+      }
+      document.getElementById('spend-fees').innerHTML=feesHtml;
     }
-    document.getElementById('spend-result').style.display='block'
-  }catch(e){alert('Analysis error. Please check your data format.')}
-  finally{setLoading('spend-btn',false,'🔍 Analyze Expenses with AI','')}
-}
+    document.getElementById('spend-result').style.display='block';
+  }catch(e){alert('Analysis error. Check your data format.');}
+  finally{this.disabled=false;this.textContent='🔍 Analyze with AI';}
+});
 
-async function analyzeContract(){
-  const vendor=document.getElementById('con-vendor').value.trim()
-  const cost=document.getElementById('con-cost').value
-  const text=document.getElementById('con-text').value.trim()
-  if(!vendor||!text){alert('Please enter vendor name and contract text');return}
-  setLoading('con-btn',true,'⚖️ Analyze Contract with AI','Analyzing...')
+document.getElementById('con-btn').addEventListener('click',async function(){
+  var vendor=document.getElementById('con-vendor').value.trim();
+  var cost=document.getElementById('con-cost').value;
+  var text=document.getElementById('con-text').value.trim();
+  if(!vendor||!text){alert('Please enter vendor name and contract text');return;}
+  this.disabled=true;this.textContent='Analyzing...';
   try{
-    const prompt=`You are an expert contract lawyer AI. Analyze this contract and return ONLY valid JSON:
-
-Vendor: ${vendor}
-Cost: $${cost}/month
-Contract: ${text}
-
-Return exactly this format:
-{"risk_score":7,"auto_renewal":true,"renewal_date":"2025-03-01","notice_period_days":30,"risks":[{"severity":"high","description":"Auto-renewal without prior notice"}],"recommendations":["Review auto-renewal clause","Request longer notice period"]}`
-    const response=await callGroq(prompt)
-    const clean=response.replace(/```json|```/g,'').trim()
-    const data=JSON.parse(clean)
-    const score=data.risk_score
-    const scoreEl=document.getElementById('con-score')
-    scoreEl.textContent=`${score}/10`
-    scoreEl.style.color=score<=3?'var(--green)':score<=6?'var(--yellow)':'var(--red)'
-    const alertEl=document.getElementById('con-renewal-alert')
+    var prompt='Analyze this contract and return ONLY valid JSON.\nVendor: '+vendor+'\nCost: $'+cost+'/month\nContract: '+text+'\n\nReturn exactly:\n{"risk_score":7,"auto_renewal":true,"renewal_date":"2025-03-01","notice_period_days":30,"risks":[{"severity":"high","description":"risk"}],"recommendations":["recommendation"]}';
+    var response=await callAI(prompt);
+    var clean=response.replace(/```json|```/g,'').trim();
+    var data=JSON.parse(clean);
+    var score=data.risk_score;
+    var scoreEl=document.getElementById('con-score');
+    scoreEl.textContent=score+'/10';
+    scoreEl.style.color=score<=3?'var(--green)':score<=6?'var(--yellow)':'var(--red)';
     if(data.auto_renewal){
-      alertEl.style.display='block'
-      alertEl.innerHTML=`⚠️ <strong>Auto-renewal</strong> on ${data.renewal_date} — must cancel ${data.notice_period_days} days before`
+      var alertEl=document.getElementById('con-renewal-alert');
+      alertEl.style.display='block';
+      alertEl.innerHTML='Auto-renewal on '+data.renewal_date+' - cancel '+data.notice_period_days+' days before';
     }
-    document.getElementById('con-risks').innerHTML=data.risks.map(r=>`
-      <div class="list-item" style="margin-bottom:.5rem">
-        <span class="badge ${r.severity==='high'?'badge-red':r.severity==='medium'?'badge-yellow':'badge-blue'}" style="margin-left:.75rem">${r.severity}</span>
-        <span style="font-size:.875rem">${r.description}</span>
-      </div>`).join('')
-    document.getElementById('con-recommendations').innerHTML=data.recommendations.map(r=>`
-      <div style="padding:.75rem;background:var(--bg);border-radius:8px;margin-bottom:.5rem;font-size:.875rem">✓ ${r}</div>`).join('')
-    document.getElementById('con-result').style.display='block'
-    contracts.push({vendor,cost,...data})
-    renderContractsList()
-  }catch(e){alert('Contract analysis error.')}
-  finally{setLoading('con-btn',false,'⚖️ Analyze Contract with AI','')}
-}
+    var risksHtml='';
+    for(var i=0;i<data.risks.length;i++){
+      var r=data.risks[i];
+      risksHtml+='<div class="list-item"><span class="badge '+(r.severity==='high'?'badge-red':r.severity==='medium'?'badge-yellow':'badge-blue')+'" style="margin-left:.75rem">'+r.severity+'</span><span>'+r.description+'</span></div>';
+    }
+    document.getElementById('con-risks').innerHTML=risksHtml;
+    var recsHtml='';
+    for(var j=0;j<data.recommendations.length;j++){
+      recsHtml+='<div style="padding:.75rem;background:var(--bg);border-radius:8px;margin-bottom:.5rem">✓ '+data.recommendations[j]+'</div>';
+    }
+    document.getElementById('con-recommendations').innerHTML=recsHtml;
+    document.getElementById('con-result').style.display='block';
+    contracts.push({vendor:vendor,cost:cost,risk_score:score});
+  }catch(e){alert('Contract analysis error.');}
+  finally{this.disabled=false;this.textContent='⚖️ Analyze Contract with AI';}
+});
 
-function renderContractsList(){
-  const el=document.getElementById('con-list')
-  if(!contracts.length)return
-  el.innerHTML=`<div class="card"><div class="card-title">Analyzed Contracts</div>${contracts.map(c=>`
-    <div class="list-item">
-      <div class="list-item-left"><h4>${c.vendor}</h4><p>$${c.cost}/month · Renewal: ${c.renewal_date||'Unknown'}</p></div>
-      <span class="badge ${c.risk_score>6?'badge-red':c.risk_score>3?'badge-yellow':'badge-green'}">Risk ${c.risk_score}/10</span>
-    </div>`).join('')}</div>`
-}
-
-async function analyzeInvoice(){
-  const vendor=document.getElementById('inv-vendor').value.trim()
-  const amount=document.getElementById('inv-amount').value
-  const text=document.getElementById('inv-text').value.trim()
-  if(!text){alert('Please enter invoice details');return}
-  setLoading('inv-btn',true,'🔍 Analyze Invoice with AI','Analyzing...')
+document.getElementById('inv-btn').addEventListener('click',async function(){
+  var vendor=document.getElementById('inv-vendor').value.trim();
+  var amount=document.getElementById('inv-amount').value;
+  var text=document.getElementById('inv-text').value.trim();
+  if(!text){alert('Please enter invoice details');return;}
+  this.disabled=true;this.textContent='Analyzing...';
   try{
-    const prompt=`You are an expert accountant. Analyze this invoice thoroughly:
+    var prompt='You are an expert accountant. Analyze this invoice:\nVendor: '+(vendor||'Unknown')+'\nTotal: $'+(amount||'Unknown')+'\nDetails: '+text+'\n\nProvide: 1) Summary 2) Suspicious charges 3) Errors 4) Market comparison 5) Recommendations 6) Is it reasonable?';
+    var response=await callAI(prompt);
+    document.getElementById('inv-result-text').textContent=response;
+    document.getElementById('inv-result').style.display='block';
+  }catch(e){alert('Invoice analysis error.');}
+  finally{this.disabled=false;this.textContent='🔍 Analyze Invoice with AI';}
+});
 
-Vendor: ${vendor||'Unknown'}
-Total Amount: $${amount||'Unknown'}
-Invoice Details: ${text}
-
-Provide a detailed report including:
-1. Invoice Summary
-2. Suspicious or unjustified charges
-3. Potential calculation errors
-4. Market price comparison
-5. Negotiation or dispute recommendations
-6. Is this invoice reasonable? (Yes/No with reason)
-7. Estimated fair price`
-    const response=await callGroq(prompt)
-    document.getElementById('inv-result-text').textContent=response
-    document.getElementById('inv-result').style.display='block'
-  }catch(e){alert('Invoice analysis error.')}
-  finally{setLoading('inv-btn',false,'🔍 Analyze Invoice with AI','')}
-}
-
-async function predictCashFlow(){
-  const income=document.getElementById('cf-income').value
-  const fixed=document.getElementById('cf-fixed').value
-  const variable=document.getElementById('cf-variable').value
-  const debt=document.getElementById('cf-debt').value
-  const extra=document.getElementById('cf-extra').value.trim()
-  if(!income||!fixed){alert('Please enter income and fixed expenses');return}
-  setLoading('cf-btn',true,'📈 Predict Cash Flow','Analyzing...')
+document.getElementById('cf-btn').addEventListener('click',async function(){
+  var income=document.getElementById('cf-income').value;
+  var fixed=document.getElementById('cf-fixed').value;
+  var variable=document.getElementById('cf-variable').value;
+  var debt=document.getElementById('cf-debt').value;
+  var extra=document.getElementById('cf-extra').value.trim();
+  if(!income||!fixed){alert('Please enter income and fixed expenses');return;}
+  this.disabled=true;this.textContent='Analyzing...';
   try{
-    const prompt=`You are an expert CFO. Provide a detailed cash flow forecast:
+    var prompt='You are an expert CFO. Provide cash flow forecast:\nIncome: $'+income+'/month\nFixed: $'+fixed+'/month\nVariable: $'+(variable||0)+'/month\nDebt: $'+(debt||0)+'/month\nExceptional: '+(extra||'None')+'\n\nProvide: 1) Current net 2) Month 1 forecast 3) Month 2 forecast 4) Month 3 forecast 5) Risks 6) 3 recommendations';
+    var response=await callAI(prompt);
+    document.getElementById('cf-result-text').textContent=response;
+    document.getElementById('cf-result').style.display='block';
+  }catch(e){alert('Analysis error.');}
+  finally{this.disabled=false;this.textContent='📈 Predict Cash Flow';}
+});
 
-Financial Data:
-- Monthly Income: $${income}
-- Fixed Expenses: $${fixed}
-- Variable Expenses: $${variable||0}
-- Monthly Debt: $${debt||0}
-- Exceptional Expenses: ${extra||'None'}
-
-Provide:
-1. Current situation (net monthly)
-2. Month 1 forecast (best and worst case)
-3. Month 2 forecast
-4. Month 3 forecast
-5. Liquidity risk assessment
-6. 3 practical recommendations to improve cash flow
-7. Monthly break-even point
-8. Specific action steps to take this week`
-    const response=await callGroq(prompt)
-    document.getElementById('cf-result-text').textContent=response
-    document.getElementById('cf-result').style.display='block'
-  }catch(e){alert('Analysis error.')}
-  finally{setLoading('cf-btn',false,'📈 Predict Cash Flow','')}
-}
-
-async function sendAdvisor(){
-  const input=document.getElementById('advisor-input')
-  const msg=input.value.trim()
-  if(!msg)return
-  input.value=''
-  const chatEl=document.getElementById('advisor-chat')
-  chatEl.innerHTML+=`<div style="align-self:flex-end;background:var(--green);color:white;padding:.75rem 1rem;border-radius:12px 12px 4px 12px;max-width:85%;font-size:.875rem">${msg}</div>`
-  chatEl.innerHTML+=`<div id="advisor-loading" style="align-self:flex-start;background:var(--card2);padding:.75rem 1rem;border-radius:12px 12px 12px 4px;color:var(--muted);font-size:.875rem">⟳ Thinking...</div>`
-  chatEl.scrollTop=chatEl.scrollHeight
-  advisorHistory.push({role:'user',content:msg})
+document.getElementById('advisor-send').addEventListener('click',async function(){
+  var input=document.getElementById('advisor-input');
+  var msg=input.value.trim();
+  if(!msg)return;
+  input.value='';
+  var chat=document.getElementById('advisor-chat');
+  chat.innerHTML+='<div style="align-self:flex-end;background:var(--green);color:white;padding:.75rem 1rem;border-radius:12px 12px 4px 12px;max-width:85%;font-size:.875rem">'+msg+'</div>';
+  chat.innerHTML+='<div id="adv-loading" style="align-self:flex-start;background:var(--card2);padding:.75rem 1rem;border-radius:12px;color:var(--muted);font-size:.875rem">Thinking...</div>';
+  chat.scrollTop=chat.scrollHeight;
+  advisorHistory.push({role:'user',content:msg});
   try{
-    const res=await fetch(WORKER_URL,{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        model:'llama3-70b-8192',
-        messages:[
-          {role:'system',content:'You are an expert CFO and financial advisor for small businesses. Answer clearly and concisely in English. Provide practical advice with specific numbers when possible. Be direct and actionable.'},
-          ...advisorHistory
-        ],
-        max_tokens:800
-      })
-    })
-    const data=await res.json()
-    const reply=data.choices[0].message.content
-    advisorHistory.push({role:'assistant',content:reply})
-    document.getElementById('advisor-loading').remove()
-    chatEl.innerHTML+=`<div style="align-self:flex-start;background:var(--card2);padding:.75rem 1rem;border-radius:12px 12px 12px 4px;max-width:90%;font-size:.875rem;line-height:1.6;white-space:pre-wrap">🤖 ${reply}</div>`
-    chatEl.scrollTop=chatEl.scrollHeight
+    var r=await fetch(WORKER,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'llama3-70b-8192',messages:[{role:'system',content:'You are an expert CFO advisor for small businesses. Be concise and practical.'}].concat(advisorHistory),max_tokens:800})});
+    var d=await r.json();
+    var reply=d.choices[0].message.content;
+    advisorHistory.push({role:'assistant',content:reply});
+    document.getElementById('adv-loading').remove();
+    chat.innerHTML+='<div style="align-self:flex-start;background:var(--card2);padding:.75rem 1rem;border-radius:12px 12px 12px 4px;max-width:90%;font-size:.875rem;line-height:1.6;white-space:pre-wrap">🤖 '+reply+'</div>';
+    chat.scrollTop=chat.scrollHeight;
   }catch(e){
-    document.getElementById('advisor-loading').remove()
-    chatEl.innerHTML+=`<div style="align-self:flex-start;color:var(--red);font-size:.875rem">Connection error</div>`
+    document.getElementById('adv-loading').remove();
+    chat.innerHTML+='<div style="color:var(--red);font-size:.875rem">Connection error</div>';
   }
-}
+});
 
-checkSession()
+document.getElementById('advisor-input').addEventListener('keydown',function(e){
+  if(e.key==='Enter')document.getElementById('advisor-send').click();
+});
+
+var saved=localStorage.getItem('cfo');
+if(saved){
+  try{
+    currentUser=JSON.parse(saved);
+    document.getElementById('nav-email').textContent=currentUser.email;
+    document.getElementById('dash-greeting').textContent='Welcome back, '+currentUser.name+' 👋';
+    go('page-dashboard');
+  }catch(e){go('page-landing');}
+}else{
+  go('page-landing');
+}
 </script>
 </body>
 </html>
