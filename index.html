@@ -132,7 +132,7 @@ textarea.input{resize:vertical;min-height:120px;font-family:inherit}
     <h1 class="hero-title">Your AI Financial Officer</h1>
     <p class="hero-sub">Recover chargebacks, detect waste, analyze contracts — all with AI in one place. Save thousands every month.</p>
     <div class="hero-btns">
-      <button class="btn-primary" onclick="showPage('page-signup')">Start Free →</button>
+      <button class="btn-primary" onclick="document.querySelectorAll('.page').forEach(p=>p.style.display='none');document.getElementById('page-signup').style.display='block'">
       <button class="btn-secondary" onclick="showPage('page-login')">Sign In</button>
     </div>
   </div>
