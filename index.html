@@ -470,7 +470,15 @@ document.getElementById('signup-btn').addEventListener('click',async function(){
       document.getElementById('dash-greeting').textContent='Welcome, '+name+' 👋';
       go('page-dashboard');
     }else{
-      showMsg('signup-success','Account created! Check your email to confirm.');
+      if(d.user){
+  currentUser={token:d.access_token||'temp',email:email,name:name};
+  localStorage.setItem('cfo',JSON.stringify(currentUser));
+  document.getElementById('nav-email').textContent=email;
+  document.getElementById('dash-greeting').textContent='Welcome, '+name+' 👋';
+  go('page-dashboard');
+}else{
+  showMsg('signup-success','Account created! You can now sign in.');
+  }
     }
   }catch(e){showMsg('signup-error','Connection error');}
   finally{this.disabled=false;this.textContent='Create Free Account';}
