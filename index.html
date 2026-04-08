@@ -521,8 +521,10 @@ document.getElementById('spend-btn').addEventListener('click',async function(){
   try{
     var prompt='Analyze these transactions and return ONLY valid JSON:\n'+text+'\n\nReturn exactly:\n{"subscriptions":[{"name":"Netflix","amount":15.99,"frequency":"monthly","recommendation":"cancel"}],"hidden_fees":[{"description":"fee","amount":10}],"total_waste":100,"savings_potential":1200}\n\nrecommendation must be cancel or keep only.';
     var response=await callAI(prompt);
-    var clean=response.replace(/```json|```/g,'').trim();
-    var data=JSON.parse(clean);
+    var clean=response.replace(/```json|```|`/g,'').trim();
+var jsonMatch=clean.match(/\{[\s\S]*\}/);
+if(!jsonMatch)throw new Error('No JSON');
+var data=JSON.parse(jsonMatch[0]);
     document.getElementById('spend-waste').textContent='$'+data.total_waste;
     document.getElementById('spend-savings').textContent='Save up to $'+data.savings_potential+'/year';
     var subsHtml='';
