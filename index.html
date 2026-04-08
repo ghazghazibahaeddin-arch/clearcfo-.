@@ -521,9 +521,10 @@ document.getElementById('spend-btn').addEventListener('click',async function(){
   try{
     var prompt='Return ONLY a JSON object, no text before or after, no markdown, no explanation. Use this exact format: {"subscriptions":[{"name":"Netflix","amount":15.99,"frequency":"monthly","recommendation":"cancel"}],"hidden_fees":[],"total_waste":200,"savings_potential":2400}\n\nTransactions to analyze:\n'+text;    var response=await callAI(prompt);
     var clean=response.replace(/```json|```|`/g,'').trim();
-var jsonMatch=clean.match(/\{[\s\S]*\}/);
-if(!jsonMatch)throw new Error('No JSON');
-var data=JSON.parse(jsonMatch[0]);
+var start=clean.indexOf('{');
+var end=clean.lastIndexOf('}')+1;
+if(start===-1||end===0)throw new Error('No JSON');
+var data=JSON.parse(clean.slice(start,end));
     document.getElementById('spend-waste').textContent='$'+data.total_waste;
     document.getElementById('spend-savings').textContent='Save up to $'+data.savings_potential+'/year';
     var subsHtml='';
