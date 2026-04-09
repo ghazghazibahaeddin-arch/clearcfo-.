@@ -518,10 +518,21 @@ document.getElementById('spend-btn').addEventListener('click',async function(){
   var text=document.getElementById('spend-text').value.trim();
   if(!text){alert('Please enter expense data');return;}
   this.disabled=true;this.textContent='Analyzing...';
-  
+  try{
+    var prompt='Return ONLY valid JSON, no text, no markdown:\n'+text+'\n\nFormat: {"subscriptions":[{"name":"Netflix","amount":15.99,"frequency":"monthly","recommendation":"cancel"}],"hidden_fees":[],"total_waste":200,"savings_potential":2400}';
+    var response=await callAI(prompt,'Return only valid JSON. No text.');
+    var start=response.indexOf('{');
+    var end=response.lastIndexOf('}')+1;
+    var data=JSON.parse(response.slice(start,end));
+    document.getElementById('spend-waste').textContent='$'+data.total_waste;
+    document.getElementById('spend-savings').textContent='Save up to $'+data.savings_potential+'/year';
+    var subsHtml='';
+    for(var i=0;i<data.subscriptions.length;i++){var s=data.subscriptions[i];subsHtml+='<div class="list-item"><div class="list-item-left"><h4>'+s.name+'</h4><p>'+s.frequency+'</p></div><div style="display:flex;align-items:center;gap:.75rem"><span style="font-weight:700">$'+s.amount+'</span><span class="badge '+(s.recommendation==='cancel'?'badge-red':'badge-green')+'">'+(s.recommendation==='cancel'?'Cancel':'Keep')+'</span></div></div>';}
+    document.getElementById('spend-subs').innerHTML=subsHtml;
+    document.getElementById('spend-result').style.display='block';
+  }catch(e){alert('Error: '+e.message);}
   finally{this.disabled=false;this.textContent='🔍 Analyze with AI';}
 });
-
 documentry{
   var prompt='You must respond with ONLY a JSON object. No text, no markdown, no explanation. Just the raw JSON.\n\nAnalyze these expenses:\n'+text+'\n\nRespond with exactly this structure:\n{"subscriptions":[{"name":"Netflix","amount":15.99,"frequency":"monthly","recommendation":"cancel"}],"hidden_fees":[],"total_waste":200,"savings_potential":2400}';
   var response=await callAI(prompt,'You are a JSON API. You only output valid JSON objects. Never output text or markdown.');
