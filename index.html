@@ -518,36 +518,36 @@ document.getElementById('spend-btn').addEventListener('click',async function(){
   var text=document.getElementById('spend-text').value.trim();
   if(!text){alert('Please enter expense data');return;}
   this.disabled=true;this.textContent='Analyzing...';
-  try{
-    var prompt='Return ONLY a JSON object, no text before or after, no markdown, no explanation. Use this exact format: {"subscriptions":[{"name":"Netflix","amount":15.99,"frequency":"monthly","recommendation":"cancel"}],"hidden_fees":[],"total_waste":200,"savings_potential":2400}\n\nTransactions to analyze:\n'+text;    var response=await callAI(prompt);
-    var clean=response.replace(/```json|```|`/g,'').trim();
-var start=clean.indexOf('{');
-var end=clean.lastIndexOf('}')+1;
-if(start===-1||end===0)throw new Error('No JSON');
-var data=JSON.parse(clean.slice(start,end));
-    document.getElementById('spend-waste').textContent='$'+data.total_waste;
-    document.getElementById('spend-savings').textContent='Save up to $'+data.savings_potential+'/year';
-    var subsHtml='';
-    for(var i=0;i<data.subscriptions.length;i++){
-      var s=data.subscriptions[i];
-      subsHtml+='<div class="list-item"><div class="list-item-left"><h4>'+s.name+'</h4><p>'+s.frequency+'</p></div><div style="display:flex;align-items:center;gap:.75rem"><span style="font-weight:700">$'+s.amount+'</span><span class="badge '+(s.recommendation==='cancel'?'badge-red':'badge-green')+'">'+(s.recommendation==='cancel'?'Cancel':'Keep')+'</span></div></div>';
-    }
-    document.getElementById('spend-subs').innerHTML=subsHtml;
-    if(data.hidden_fees&&data.hidden_fees.length>0){
-      document.getElementById('spend-fees-card').style.display='block';
-      var feesHtml='';
-      for(var j=0;j<data.hidden_fees.length;j++){
-        var f=data.hidden_fees[j];
-        feesHtml+='<div class="list-item"><div class="list-item-left"><h4>'+f.description+'</h4></div><span style="color:var(--red);font-weight:700">$'+f.amount+'</span></div>';
-      }
-      document.getElementById('spend-fees').innerHTML=feesHtml;
-    }
-    document.getElementById('spend-result').style.display='block';
-  }catch(e){alert('Analysis error. Check your data format.');}
+  
   finally{this.disabled=false;this.textContent='🔍 Analyze with AI';}
 });
 
-document.getElementById('con-btn').addEventListener('click',async function(){
+documentry{
+  var prompt='You must respond with ONLY a JSON object. No text, no markdown, no explanation. Just the raw JSON.\n\nAnalyze these expenses:\n'+text+'\n\nRespond with exactly this structure:\n{"subscriptions":[{"name":"Netflix","amount":15.99,"frequency":"monthly","recommendation":"cancel"}],"hidden_fees":[],"total_waste":200,"savings_potential":2400}';
+  var response=await callAI(prompt,'You are a JSON API. You only output valid JSON objects. Never output text or markdown.');
+  var start=response.indexOf('{');
+  var end=response.lastIndexOf('}')+1;
+  if(start===-1||end===0){alert('Try again.');return;}
+  var data=JSON.parse(response.slice(start,end));
+  document.getElementById('spend-waste').textContent='$'+data.total_waste;
+  document.getElementById('spend-savings').textContent='Save up to $'+data.savings_potential+'/year';
+  var subsHtml='';
+  for(var i=0;i<data.subscriptions.length;i++){
+    var s=data.subscriptions[i];
+    subsHtml+='<div class="list-item"><div class="list-item-left"><h4>'+s.name+'</h4><p>'+s.frequency+'</p></div><div style="display:flex;align-items:center;gap:.75rem"><span style="font-weight:700">$'+s.amount+'</span><span class="badge '+(s.recommendation==='cancel'?'badge-red':'badge-green')+'">'+(s.recommendation==='cancel'?'Cancel':'Keep')+'</span></div></div>';
+  }
+  document.getElementById('spend-subs').innerHTML=subsHtml;
+  if(data.hidden_fees&&data.hidden_fees.length>0){
+    document.getElementById('spend-fees-card').style.display='block';
+    var feesHtml='';
+    for(var j=0;j<data.hidden_fees.length;j++){
+      var f=data.hidden_fees[j];
+      feesHtml+='<div class="list-item"><div class="list-item-left"><h4>'+f.description+'</h4></div><span style="color:var(--red);font-weight:700">$'+f.amount+'</span></div>';
+    }
+    document.getElementById('spend-fees').innerHTML=feesHtml;
+  }
+  document.getElementById('spend-result').style.display='block';
+}catch(e){alert('Error: '+e.message);}t.getElementById('con-btn').addEventListener('click',async function(){
   var vendor=document.getElementById('con-vendor').value.trim();
   var cost=document.getElementById('con-cost').value;
   var text=document.getElementById('con-text').value.trim();
